@@ -38,7 +38,7 @@ ms = 500 # Length of buffer will be 500 milliseconds
 buf = synth.make_white(ms, 1.0) # Fill buffer with white noise
 buf = synth.lowpass_filter(buf, 1200.0, order=4) # Apply a filter to remove higher frequencies
 synth.noisalise(buf, gain=0.5) # Even out the amplitude of the noise
-synth.envelope(buf, 20, 30, 0.2, ms - 10) # Apply an envelope with a short attack and release and then fade off from 20% amplitude
+synth.envelope(buf, 20, 30, 0.2, ms - 50) # Apply an envelope with a short attack and decay and then fade off from 20% amplitude
 sound = pygame.mixer.Sound(synth.tobytes(buf))
 sound.play()
 ```
