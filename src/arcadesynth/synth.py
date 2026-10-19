@@ -8,7 +8,7 @@ import numpy as np
 from scipy.signal import butter, filtfilt, medfilt
 
 DEFAULT_FREQUENCY = 44100
-DEFAULT_CHANNELS = 1
+DEFAULT_CHANNELS = 2
 MAX_LEN = 3600000
 SAMPLE_RATE = DEFAULT_FREQUENCY * DEFAULT_CHANNELS
 
@@ -95,6 +95,10 @@ def init(frequency=DEFAULT_FREQUENCY, channels=DEFAULT_CHANNELS):
     global SAMPLE_RATE
     SAMPLE_RATE = frequency * channels
     return
+
+
+def get_init():
+    return SAMPLE_RATE
 
 
 def tobytes(buf):
