@@ -20,7 +20,7 @@ pip install arcadesynth
 - synth_sample - some simple basic sounds
 - synth_example - some generic retro sound effects
 - synth_asteroids - sounds from the 1979 Atari game Asteroids
-- synth_spaceinvaders - sounds from the 1978 Taito game Asteroids
+- synth_spaceinvaders - sounds from the 1978 Taito game Space Invaders
 
 ## Synth
 
