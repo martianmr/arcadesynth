@@ -39,7 +39,7 @@ pre_commit_hook = ""
 post_commit_hook = ""
 commit = true
 tag = true
-push = false
+push = true
 allowed_branches = "main,develop,release*"
 
 [tool.bumpver.file_patterns]
