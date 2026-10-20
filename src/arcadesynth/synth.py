@@ -163,16 +163,6 @@ def fade(buf, a1, a2):
     return buf
 
 
-def noisalise(buf, vol = 1.0, gain = 1.0):
-    """Apply gain to buffer proportional to mean amplitude, useful for restoring a constant RMS after processing noise"""
-    data = np.array(buf)
-    av = (data[data > 0].mean() + -data[data < 0].mean()) / 2.0
-    r = gain / (av / 2.0)
-    for i in range(len(buf)):
-        buf[i] = _limit(buf[i], limit=vol / gain) * r * vol
-    return
-
-
 def slice(buf, start, end):
     """Extract a section of a buffer with start and end times in ms"""
     s = int(SAMPLE_RATE * start / 1000.0)
@@ -293,6 +283,16 @@ def tremolo(buf, freq, intensity, shape=sin):
     for i in range(len(buf)):
         phase = i * math.pi * freq / SAMPLE_RATE
         buf[i] *= (1.0 - intensity) + abs(((shape(phase) + 1.0) / 2.0) * intensity)
+    return
+
+
+def noisalise(buf, vol = 1.0, gain = 1.0):
+    """Apply gain to buffer proportional to mean amplitude, useful for restoring a constant RMS after processing noise"""
+    data = np.array(buf)
+    av = (data[data > 0].mean() + -data[data < 0].mean()) / 2.0
+    r = gain / (av / 2.0)
+    for i in range(len(buf)):
+        buf[i] = _limit(buf[i], limit=vol / gain) * r * vol
     return
 
 
