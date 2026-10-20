@@ -19,9 +19,8 @@ classifiers = [
 keywords = ["arcade", "synth", "retro"]
 dependencies = [
     "scipy >= 1.17.1",
-    'tomli; python_version < "3.11"',
 ]
-requires-python = ">=3.9"
+requires-python = ">=3.11"
 
 [project.optional-dependencies]
 dev = ["pygame", "bumpver"]
