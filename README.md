@@ -1,4 +1,4 @@
-# arcadesynth 1.0.3
+# arcadesynth 1.0.4
 
 Programmatically synthesize retro arcade sound effects with arcadesynth
 
