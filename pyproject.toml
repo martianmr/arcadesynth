@@ -9,7 +9,7 @@ name = "arcadesynth"
 version = "1.0.7"
 description = "Programmatically synthesize retro arcade sound effects"
 readme = "README.md"
-authors = [{ name = "C. Martin Richardson", email = "c.mart.richardson@gmail.com" }]
+authors = [{ name = "C. Martin Richardson" }]
 license = { file = "LICENSE" }
 classifiers = [
     "License :: OSI Approved :: MIT License",
