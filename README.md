@@ -61,4 +61,4 @@ sound.play()
 
 ## LICENSE
 
-MIT License — See the [LICENSE](LICENSE) file for details.
+arcadesynth is is released under the [MIT license](https://opensource.org/license/mit).
