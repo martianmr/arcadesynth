@@ -41,7 +41,7 @@ def si_ufo():
 
 def si_aliendie():
     """Space Invaders enemy exploding sound"""
-    buf = array.array("d")
+    buf = new_buffer()
     params = {
         "amplitude" : (0.7, 0.7, 0.4, 0.3, 0.25),
         "length" : (80, 80, 80, 100, 120)
