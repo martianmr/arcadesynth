@@ -72,14 +72,20 @@ def triangle(phase, special = None):
 
 
 def square(phase, special = None):
-    """Calculate amplitude for a square wave at the given phase"""
+    """Calculate amplitude for a square wave at the given phase
+    
+    special can be specified as a cutoff for generating PWM
+    """
     cutoff = 0.0 if special is None else special
     return 1.0 if math.sin(phase) > cutoff else -1.0
 
 
 def sin(phase, special = None):
-    """Calculate amplitude for a sine wave at the given phase"""
-    return math.sin(phase)
+    """Calculate amplitude for a sine wave at the given phase
+    
+    special can be used to simulate lower precision math
+    """
+    return math.sin(phase) if special is None else round((math.sin(phase) / special), 1) * special
 
 
 # ---------------------------------------------------------------------------
@@ -208,21 +214,21 @@ def make_triangle(ms, vol=0.2, freq=140.0):
     return buf
 
 
-def make_square(ms, vol=0.2, freq=140.0):
+def make_square(ms, vol=0.2, freq=140.0, pwm=None):
     """Make a square wave"""
     n = int(SAMPLE_RATE * ms / 1000.0)
     buf = array.array("d")
     for i in range(n):
-        buf.append(_samplept(square, i, freq) * vol)
+        buf.append(_samplept(square, i, freq, 0, special=pwm) * vol)
     return buf
 
 
-def make_sin(ms=600, vol=0.4, freq=50.0, harmonics=0):
+def make_sin(ms=600, vol=0.4, freq=50.0, harmonics=0, precision=None):
     """Make a sine wave"""
     n = int(SAMPLE_RATE * ms / 1000.0)
     buf = array.array("d")
     for i in range(n):
-        a = _samplept(sin, i, freq, harmonics)
+        a = _samplept(sin, i, freq, harmonics, special=precision)
         buf.append(a * vol)
     return buf
 
@@ -278,11 +284,11 @@ def make_sweep(ms=80, startf=1500.0, endf=400.0, shape=triangle, vol=1.0, repeat
 # ---------------------------------------------------------------------------
 
 
-def tremolo(buf, freq, intensity, shape=sin):
+def tremolo(buf, freq, intensity, shape=sin, special=None):
     """Modify a buffer in place so that amplitude increases and decreases according to shape and intensity"""
     for i in range(len(buf)):
         phase = i * math.pi * freq / SAMPLE_RATE
-        buf[i] *= (1.0 - intensity) + abs(((shape(phase) + 1.0) / 2.0) * intensity)
+        buf[i] *= (1.0 - intensity) + abs(((shape(phase, special) + 1.0) / 2.0) * intensity)
     return
 
 
