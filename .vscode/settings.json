@@ -1,12 +1,10 @@
 {
     "cSpell.words": [
         "ADSR",
-        "aliendie",
         "arcadesynth",
         "beatlen",
         "cutoff",
         "endf",
-        "extralife",
         "highpass",
         "llimit",
         "lowpass",
@@ -17,15 +15,12 @@
         "nparray",
         "npnew",
         "npsummed",
-        "playerfire",
-        "postlen",
         "samplept",
         "sfile",
         "startf",
         "tempbuf",
         "tlen",
         "tobytes",
-        "ufodie",
         "vmove",
         "wakka"
     ]

@@ -172,3 +172,6 @@ cython_debug/
 
 # WAV files
 *.wav
+
+#VS code settings
+*.vscode/
