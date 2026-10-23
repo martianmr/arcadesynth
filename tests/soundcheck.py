@@ -2,7 +2,7 @@ import pygame
 import sys
 import wave
 
-from arcadesynth import synth_spaceinvaders as si
+from arcadesynth import synth_pacman as pm
 
 SAMPLE_RATE = 44100
 CHANNELS = 1
@@ -15,7 +15,7 @@ def init_audio():
     try:
         pygame.mixer.init()
         frequency, _, channels = pygame.mixer.get_init()
-        si.init(frequency, channels)
+        pm.init(frequency, channels)
         _sound_ok = True
     except pygame.error:
         _sound_ok = False
@@ -26,7 +26,7 @@ class Game:
         self.screen = pygame.display.set_mode((400, 400))
         self.clock = pygame.time.Clock()
         init_audio()
-        self.sound = pygame.mixer.Sound(si.si_aliendie())
+        self.sound = pygame.mixer.Sound(pm.pm_intro())
         sfile = wave.open('output.wav', 'w')
         sfile.setframerate(SAMPLE_RATE)
         sfile.setnchannels(CHANNELS)
