@@ -37,7 +37,7 @@ def _pm_wakka_sweep(ms, fs, fe):
     return buf
 
 
-def _pm_wakka_bass(ms, freq):
+def _pm_wakka_bass(ms, vol, freq):
     f = freq * 0.9333
     buf = _pm_wakka_sweep(ms, f, f)
     envelope(buf, 0, 0, 0.5, ms)
@@ -77,62 +77,58 @@ def pm_siren_high():
 
 
 def pm_intro():
-    beat = 66
-    buf = new_buffer()
-    buf = add(buf, _pm_wakka_bass(beat * 4, 130.813), 0) # C3
-    buf = add(buf, make_sin(beat, 0.5, 523.251), 0) # C5
-    buf = add(buf, make_sin(beat, 0.5, 1046.502), beat * 2) # C6
-    buf = add(buf, make_sin(beat, 0.5, 783.991), beat * 4) # G5
-    buf = add(buf, _pm_wakka_bass(beat * 4, 195.998), beat * 6) # G3
-    buf = add(buf, make_sin(beat, 0.5, 659.255), beat * 6) # E5
-    buf = add(buf, _pm_wakka_bass(beat * 4, 130.813), beat * 8) # C3
-    buf = add(buf, make_sin(beat, 0.5, 1046.502), beat * 8) # C6
-    buf = add(buf, make_sin(beat, 0.5, 783.991), beat * 9) # G5
-    buf = add(buf, make_sin(beat * 2, 0.5, 659.255), beat * 12) # E5
-    buf = add(buf, _pm_wakka_bass(beat * 4, 195.998), beat * 14) # G3
+    """Pac-Man intro music"""
+    notes = (
+        ("C3", 0, 4, 0.5, _pm_wakka_bass),
+        ("C5", 0, 1, 0.5, make_sin),
+        ("C6", 2, 1, 0.5, make_sin),
+        ("G5", 4, 1, 0.5, make_sin),
+        ("G3", 6, 4, 0.5, _pm_wakka_bass),
+        ("E5", 6, 1, 0.5, make_sin),
+        ("C3", 8, 4, 0.5, _pm_wakka_bass),
+        ("C6", 8, 1, 0.5, make_sin),
+        ("G5", 9, 1, 0.5, make_sin),
+        ("E5", 12, 2, 0.5, make_sin),
+        ("G3", 14, 4, 0.5, _pm_wakka_bass),
+        ("C#3", 16, 4, 0.5, _pm_wakka_bass),
+        ("C#5", 16, 1, 0.5, make_sin),
+        ("C#6", 18, 1, 0.5, make_sin),
+        ("G#5", 20, 1, 0.5, make_sin),
+        ("G#3", 22, 4, 0.5, _pm_wakka_bass),
+        ("F5", 22, 1, 0.5, make_sin),
+        ("C#3", 24, 4, 0.5, _pm_wakka_bass),
+        ("C#6", 24, 1, 0.5, make_sin),
+        ("G#5", 25, 1, 0.5, make_sin),
+        ("F5", 28, 2, 0.5, make_sin),
+        ("G#3", 30, 4, 0.5, _pm_wakka_bass),
+        ("C3", 32, 4, 0.5, _pm_wakka_bass),
+        ("C5", 32, 1, 0.5, make_sin),
+        ("C6", 34, 1, 0.5, make_sin),
+        ("G5", 36, 1, 0.5, make_sin),
+        ("G3", 38, 4, 0.5, _pm_wakka_bass),
+        ("E5", 38, 1, 0.5, make_sin),
+        ("C3", 40, 4, 0.5, _pm_wakka_bass),
+        ("C6", 40, 1, 0.5, make_sin),
+        ("G5", 41, 1, 0.5, make_sin),
+        ("E5", 44, 2, 0.5, make_sin),
+        ("G3", 46, 4, 0.5, _pm_wakka_bass),
+        ("G3", 48, 4, 0.5, _pm_wakka_bass),
+        ("D#5", 48, 1, 0.5, make_sin),
+        ("E5", 49, 1, 0.5, make_sin),
+        ("F5", 50, 1, 0.5, make_sin),
+        ("A3", 52, 4, 0.5, _pm_wakka_bass),
+        ("F#5", 52, 1, 0.5, make_sin),
+        ("G5", 53, 1, 0.5, make_sin),
+        ("G#5", 54, 1, 0.5, make_sin),
+        ("B3", 56, 4, 0.5, _pm_wakka_bass),
+        ("A5", 56, 1, 0.5, make_sin),
+        ("A#5", 57, 1, 0.5, make_sin),
+        ("B5", 58, 1, 0.5, make_sin),
+        ("C4", 60, 4, 0.5, _pm_wakka_bass),
+        ("C6", 60, 3, 0.5, make_sin),
+    )
 
-    buf = add(buf, _pm_wakka_bass(beat * 4, 138.591), beat * 16) # C#3
-    buf = add(buf, make_sin(beat, 0.5, 554.365), beat * 16) # C#5
-    buf = add(buf, make_sin(beat, 0.5, 1108.731), beat * 18) # C#6
-    buf = add(buf, make_sin(beat, 0.5, 830.609), beat * 20) # G#5
-    buf = add(buf, _pm_wakka_bass(beat * 4, 207.652), beat * 22) # G#3
-    buf = add(buf, make_sin(beat, 0.5, 698.456), beat * 22) # F5
-    buf = add(buf, _pm_wakka_bass(beat * 4, 138.591), beat * 24) # C#3
-    buf = add(buf, make_sin(beat, 0.5, 1108.731), beat * 24) # C#6
-    buf = add(buf, make_sin(beat, 0.5, 830.609), beat * 25) # G#5
-    buf = add(buf, make_sin(beat * 2, 0.5, 698.456), beat * 28) # F5
-    buf = add(buf, _pm_wakka_bass(beat * 4, 207.652), beat * 30) # G#3
-
-    buf = add(buf, _pm_wakka_bass(beat * 4, 130.813), beat * 32) # C3
-    buf = add(buf, make_sin(beat, 0.5, 523.251), beat * 32) # C5
-    buf = add(buf, make_sin(beat, 0.5, 1046.502), beat * 34) # C6
-    buf = add(buf, make_sin(beat, 0.5, 783.991), beat * 36) # G5
-    buf = add(buf, _pm_wakka_bass(beat * 4, 195.998), beat * 38) # G3
-    buf = add(buf, make_sin(beat, 0.5, 659.255), beat * 38) # E5
-    buf = add(buf, _pm_wakka_bass(beat * 4, 130.813), beat * 40) # C3
-    buf = add(buf, make_sin(beat, 0.5, 1046.502), beat * 40) # C6
-    buf = add(buf, make_sin(beat, 0.5, 783.991), beat * 41) # G5
-    buf = add(buf, make_sin(beat * 2, 0.5, 659.255), beat * 44) # E5
-    buf = add(buf, _pm_wakka_bass(beat * 4, 195.998), beat * 46) # G3
-
-    buf = add(buf, _pm_wakka_bass(beat * 4, 195.998), beat * 48) # G3
-    buf = add(buf, make_sin(beat, 0.5, 622.254), beat * 48) # D#5
-    buf = add(buf, make_sin(beat, 0.5, 659.255), beat * 49) # E5
-    buf = add(buf, make_sin(beat, 0.5, 698.456), beat * 50) # F5
-
-    buf = add(buf, _pm_wakka_bass(beat * 4, 220.0), beat * 52) # A3
-    buf = add(buf, make_sin(beat, 0.5, 739.989), beat * 52) # F#5
-    buf = add(buf, make_sin(beat, 0.5, 783.991), beat * 53) # G5
-    buf = add(buf, make_sin(beat, 0.5, 830.609), beat * 54) # G#5
-
-    buf = add(buf, _pm_wakka_bass(beat * 4, 246.942), beat * 56) # B3
-    buf = add(buf, make_sin(beat, 0.5, 880.0), beat * 56) # A5
-    buf = add(buf, make_sin(beat, 0.5, 932.328), beat * 57) # A#5
-    buf = add(buf, make_sin(beat, 0.5, 987.767), beat * 58) # B5
-
-    buf = add(buf, _pm_wakka_bass(beat * 4, 261.626), beat * 60) # C4
-    buf = add(buf, make_sin(beat * 3, 0.5, 1046.502), beat * 60) # C6
-
+    buf = sequence(66, notes)
     return tobytes(buf)
 
 

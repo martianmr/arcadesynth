@@ -99,7 +99,7 @@ def sin(phase, special = None):
 
 
 # ---------------------------------------------------------------------------
-# Functions to manipulate buffers and return a new buffer
+# Initialisation functions
 # ---------------------------------------------------------------------------
 
 
@@ -115,6 +115,43 @@ def init(frequency=DEFAULT_FREQUENCY, channels=DEFAULT_CHANNELS):
 
 def get_init():
     return SAMPLE_RATE
+
+
+# ---------------------------------------------------------------------------
+# General helper functions
+# ---------------------------------------------------------------------------
+
+
+# Note frequencies starting at C9, flats are omitted
+frequency9 = {
+    "C": 8372.018,
+    "C#": 8869.844,
+    "D": 9397.272,
+    "D#": 9956.064,
+    "E": 10548.084,
+    "F": 11175.304,
+    "F#": 11839.82,
+    "G": 12543.856,
+    "G#": 13289.752,
+    "A": 14080,
+    "A#": 14917.24,
+    "B": 15804.264,
+}
+
+
+
+def notehz(note):
+    """For a given note e.g. "A4", return the frequency in Hz"""
+    hz = frequency9[note[:-1]]
+    octave = int(note[-1])
+    for _ in range(9, octave, -1):
+        hz /= 2
+    return hz
+
+
+# ---------------------------------------------------------------------------
+# Functions to manipulate buffers and return a new buffer
+# ---------------------------------------------------------------------------
 
 
 def tobytes(buf):
@@ -223,7 +260,27 @@ def highpass_filter(buf, cutoff, order=6):
 
 
 def new_buffer(content=[]):
+    """Create a new buffer of floating point amplitudes"""
     return array.array("d", content)
+
+
+def sequence(beatlen, notes):
+    """Sequence notes to a buffer for creating music
+    
+    'beatlen' is the length of each beat in the sequence in milliseconds.
+    'notes' is a list of notes, each element of the list is in the following format:
+    [note_name, start_beat, length_in_beats, velocity, creation_function]
+    The creation function must have the parameter format (ms, volume, frequency)
+    """
+    buf = new_buffer()
+    for note in notes:
+        hz = notehz(note[0])
+        beat = note[1] * beatlen
+        length = note[2] * beatlen
+        velocity = note[3]
+        func = note[4]
+        buf = add(buf, func(length, velocity, hz), beat)
+    return buf
 
 
 def make_sawtooth(ms, vol=0.2, freq=140.0):
