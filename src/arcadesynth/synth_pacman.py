@@ -92,8 +92,8 @@ def pm_siren_high():
 
 def _pm_organ(ms, vol, freq):
     buf = new_buffer()
-    buf = combine(buf, make_sin(ms, vol, freq * 4, precision=2))
-    buf = combine(buf, make_sin(ms, vol, freq * 2))
+    buf = combine(buf, make_sin(ms, vol / 2, freq * 4, precision=2))
+    buf = combine(buf, make_triangle(ms, vol, freq * 2))
     buf = combine(buf, make_sin(ms, vol / 2, freq, precision=2))
     return buf
 
