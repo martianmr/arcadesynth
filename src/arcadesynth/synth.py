@@ -31,41 +31,6 @@ def _butterworth_filter(buf, cutoff, type='lowpass', order=2):
     return buf
 
 
-def _samplept(func, i, f, harmonics=0, p=[], special=None):
-    """Calculate amplitude of a sample for a buffer position
-
-    Given a function to calculate amplitude of a wave (func) for a buffer position (i)
-    and frequency (f) calculate and return the amplitude.
-    If harmonics is not zero also add in the amplitude of the given order of harmonics.
-    If frequency is not constant throughout the buffer, track the current phase during the
-    building process and pass the current phase of the primary and any harmonics through 
-    the list (p), otherwise phase can be calculated on the fly.
-    """
-    amp = 0.0
-    scaling = math.pow(2, harmonics) / (math.pow(2, harmonics + 1) - 1)
-    for h in range(harmonics + 1):
-        freq = f * (h + 1)
-        vol = (1.0 / (h + 1)) * scaling
-        dp = 2 * math.pi * freq / SAMPLE_RATE
-        if len(p) == 0:
-            phase = dp * i
-        else:
-            phase = p[h] = p[h] + dp
-        a = func(phase, special)
-        amp += a * vol
-    return amp if len(p) == 0 else (amp, p)
-
-
-def _ms_to_samples(ms):
-    """Convert time in milliseconds to number of samples"""
-    return int(SAMPLE_RATE * ms / 1000.0)
-
-
-def _samples_to_ms(n):
-    """Convert number of samples to time in milliseconds"""
-    return (n / SAMPLE_RATE) * 1000.0
-
-
 # ---------------------------------------------------------------------------
 # Functions to calculate amplitude depending on phase
 # ---------------------------------------------------------------------------
@@ -149,6 +114,41 @@ def notehz(note):
     return hz
 
 
+def samplept(func, i, f, harmonics=0, p=[], special=None):
+    """Calculate amplitude of a sample for a buffer position
+
+    Given a function to calculate amplitude of a wave (func) for a buffer position (i)
+    and frequency (f) calculate and return the amplitude.
+    If harmonics is not zero also add in the amplitude of the given order of harmonics.
+    If frequency is not constant throughout the buffer, track the current phase during the
+    building process and pass the current phase of the primary and any harmonics through 
+    the list (p), otherwise phase can be calculated on the fly.
+    """
+    amp = 0.0
+    scaling = math.pow(2, harmonics) / (math.pow(2, harmonics + 1) - 1)
+    for h in range(harmonics + 1):
+        freq = f * (h + 1)
+        vol = (1.0 / (h + 1)) * scaling
+        dp = 2 * math.pi * freq / SAMPLE_RATE
+        if len(p) == 0:
+            phase = dp * i
+        else:
+            phase = p[h] = p[h] + dp
+        a = func(phase, special)
+        amp += a * vol
+    return amp if len(p) == 0 else (amp, p)
+
+
+def ms_to_samples(ms):
+    """Convert time in milliseconds to number of samples"""
+    return int(SAMPLE_RATE * ms / 1000.0)
+
+
+def samples_to_ms(n):
+    """Convert number of samples to time in milliseconds"""
+    return (n / SAMPLE_RATE) * 1000.0
+
+
 # ---------------------------------------------------------------------------
 # Functions to manipulate buffers and return a new buffer
 # ---------------------------------------------------------------------------
@@ -195,7 +195,7 @@ def combine(buf1, buf2):
 
 def add(target, source, offset=0):
     """Add the source sample to the target buffer"""
-    olen = _ms_to_samples(offset)
+    olen = ms_to_samples(offset)
     slen = len(source)
     tlen = slen + olen
     if (len(target) < tlen):
@@ -228,15 +228,15 @@ def vmove(buf, amount):
 def fade(buf, a1, a2):
     """Change start and end amplitude and scale smoothly between"""
     buf = boost(buf, a1)
-    ms = _samples_to_ms(len(buf))
+    ms = samples_to_ms(len(buf))
     envelope(buf, 0, ms, a2 / a1, 0)
     return buf
 
 
 def slice(buf, start, end):
     """Extract a section of a buffer with start and end times in ms"""
-    s = _ms_to_samples(start)
-    e = min(len(buf), _ms_to_samples(end))
+    s = ms_to_samples(start)
+    e = min(len(buf), ms_to_samples(end))
     return buf[s:e]
 
 
@@ -287,37 +287,37 @@ def sequence(beatlen, notes, finetune = 1.0):
 
 def make_sawtooth(ms, vol=0.2, freq=140.0):
     """Make a sawtooth wave"""
-    n = _ms_to_samples(ms)
+    n = ms_to_samples(ms)
     buf = new_buffer()
     for i in range(n):
-        buf.append(_samplept(sawtooth, i, freq) * vol)
+        buf.append(samplept(sawtooth, i, freq) * vol)
     return buf
 
 
 def make_triangle(ms, vol=0.2, freq=140.0):
     """Make a triangle wave"""
-    n = _ms_to_samples(ms)
+    n = ms_to_samples(ms)
     buf = new_buffer()
     for i in range(n):
-        buf.append(_samplept(triangle, i, freq) * vol)
+        buf.append(samplept(triangle, i, freq) * vol)
     return buf
 
 
 def make_square(ms, vol=0.2, freq=140.0, pwm=None):
     """Make a square wave"""
-    n = _ms_to_samples(ms)
+    n = ms_to_samples(ms)
     buf = new_buffer()
     for i in range(n):
-        buf.append(_samplept(square, i, freq, 0, special=pwm) * vol)
+        buf.append(samplept(square, i, freq, 0, special=pwm) * vol)
     return buf
 
 
 def make_sin(ms=600, vol=0.4, freq=50.0, harmonics=0, precision=None):
     """Make a sine wave"""
-    n = _ms_to_samples(ms)
+    n = ms_to_samples(ms)
     buf = new_buffer()
     for i in range(n):
-        a = _samplept(sin, i, freq, harmonics, special=precision)
+        a = samplept(sin, i, freq, harmonics, special=precision)
         buf.append(a * vol)
     return buf
 
@@ -328,7 +328,7 @@ def make_white(ms=600, vol=0.4, smooth=False):
     If smooth is False use values of 1.0 or -1.0 randomly to produce white noise similar to the SN76477 Complex Sound Generator chip,
     otherwise generate purely random amplitudes which gives a more natural noise.
     """
-    n = _ms_to_samples(ms)
+    n = ms_to_samples(ms)
     buf = new_buffer()
     random.seed(0)
     rng = random.Random()
@@ -351,8 +351,8 @@ def make_sweep(ms=80, startf=1500.0, endf=400.0, shape=triangle, vol=1.0, repeat
     If repeat is not zero the cycle goes from startf to endf and back to startf in repeat milliseconds and
     continues to cycle until ms milliseconds have been filled.
     """
-    n = _ms_to_samples(ms)
-    loop = n * 2 if repeat == 0 else _ms_to_samples(repeat)
+    n = ms_to_samples(ms)
+    loop = n * 2 if repeat == 0 else ms_to_samples(repeat)
     period = loop // 2
     buf = new_buffer()
     phase = [0.0 for _ in range(harmonics + 1)]
@@ -363,7 +363,7 @@ def make_sweep(ms=80, startf=1500.0, endf=400.0, shape=triangle, vol=1.0, repeat
         else:
             pass
         f = (startf - ((startf - endf) * (x / period) ))
-        a, phase = _samplept(shape, i, f, harmonics, phase, special)
+        a, phase = samplept(shape, i, f, harmonics, phase, special)
         buf.append(a * vol)
     return buf
 
@@ -400,11 +400,11 @@ def noisalise(buf, vol = 1.0, gain = 1.0):
 
 def envelope(buf, attack, decay, sustain, release, start=0, end=MAX_LEN):
     """Modify a buffer in place with an ADSR envelope"""
-    attack_start = _ms_to_samples(start)
-    attack_end = min(len(buf), _ms_to_samples(start + attack))
-    decay_end = min(len(buf), _ms_to_samples(decay) + attack_end)
-    release_end = min(len(buf), _ms_to_samples(end))
-    sustain_end = min(len(buf), release_end - _ms_to_samples(release))
+    attack_start = ms_to_samples(start)
+    attack_end = min(len(buf), ms_to_samples(start + attack))
+    decay_end = min(len(buf), ms_to_samples(decay) + attack_end)
+    release_end = min(len(buf), ms_to_samples(end))
+    sustain_end = min(len(buf), release_end - ms_to_samples(release))
     if attack != 0.0:
         for i in range(attack_start, attack_end):
             buf[i] *= (i - attack_start) / (attack_end - attack_start)
@@ -419,7 +419,7 @@ def envelope(buf, attack, decay, sustain, release, start=0, end=MAX_LEN):
 
 def echo(buf, ms, vol):
     """Modify buffer in place to add a short delay to the sound"""
-    delay = _ms_to_samples(ms)
+    delay = ms_to_samples(ms)
     for _ in range(delay):
         buf.append(0.0)
     for i in range(len(buf)):

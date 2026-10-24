@@ -90,12 +90,30 @@ def pm_siren_high():
     return tobytes(buf)
 
 
+def _pm_organ_sample(p, _):
+    return (sin(p * 4) / 4) + (triangle(p * 2) / 2) + (sin(p) / 2)
+
+
 def _pm_organ(ms, vol, freq):
+    n = ms_to_samples(ms)
     buf = new_buffer()
-    buf = combine(buf, make_sin(ms, vol / 2, freq * 4, precision=2))
-    buf = combine(buf, make_triangle(ms, vol, freq * 2))
-    buf = combine(buf, make_sin(ms, vol / 2, freq, precision=2))
+    for i in range(n):
+        a = samplept(_pm_organ_sample, i, freq)
+        buf.append(a * vol)
     return buf
+
+
+def pm_die():
+    buf = make_sweep(180, 725, 575, _pm_organ_sample, 0.6, 180)
+    buf += make_sweep(200, 625, 510, _pm_organ_sample, 0.57, 200)
+    buf += make_sweep(200, 590, 460, _pm_organ_sample, 0.54, 200)
+    buf += make_sweep(200, 520, 410, _pm_organ_sample, 0.51, 200)
+    buf += make_sweep(200, 490, 380, _pm_organ_sample, 0.48, 200)
+    buf += make_sweep(130, 450, 320, _pm_organ_sample, 0.45, 130)
+    buf += make_sweep(180, 150, 2000, sin, 0.35)
+    pad(buf, len(buf) + ms_to_samples(17))
+    buf += make_sweep(180, 150, 2000, sin, 0.35)
+    return tobytes(buf)
 
 
 def pm_intermission():
