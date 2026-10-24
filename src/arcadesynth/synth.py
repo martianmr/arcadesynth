@@ -196,13 +196,14 @@ def combine(buf1, buf2):
 def add(target, source, offset=0):
     """Add the source sample to the target buffer"""
     olen = _ms_to_samples(offset)
-    tlen = len(source) + olen
+    slen = len(source)
+    tlen = slen + olen
     if (len(target) < tlen):
         pad(target, tlen)
     post = target[tlen:]
     pre = target[:olen]
     nparray1 = np.array(target[olen:tlen])
-    nparray2 = np.array(source)
+    nparray2 = np.array(source[:slen])
     npsummed = nparray1 + nparray2
     buf = pre + new_buffer(npsummed) + post
     return buf
@@ -264,17 +265,18 @@ def new_buffer(content=[]):
     return array.array("d", content)
 
 
-def sequence(beatlen, notes):
+def sequence(beatlen, notes, finetune = 1.0):
     """Sequence notes to a buffer for creating music
     
     'beatlen' is the length of each beat in the sequence in milliseconds.
     'notes' is a list of notes, each element of the list is in the following format:
     [note_name, start_beat, length_in_beats, velocity, creation_function]
     The creation function must have the parameter format (ms, volume, frequency)
+    finetune can be used to make the notes consistently slightly sharp/flat.
     """
     buf = new_buffer()
     for note in notes:
-        hz = notehz(note[0])
+        hz = notehz(note[0]) * finetune
         beat = note[1] * beatlen
         length = note[2] * beatlen
         velocity = note[3]
