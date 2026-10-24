@@ -42,6 +42,7 @@ def _pm_bass(ms, vol, freq):
     buf = _pm_wakka_sweep(ms, f, f)
     return buf
 
+
 def _pm_intro_bass(ms, vol, freq):
     buf = _pm_bass(ms, vol, freq)
     envelope(buf, 0, 0, vol, ms)
@@ -356,10 +357,8 @@ def pm_intro():
         ("C4", 60, 4, 0.5, _pm_intro_bass),
         ("C6", 60, 2, 0.5, make_sin),
     )
-
     buf = sequence(66, notes, 1.022)
     return tobytes(buf)
-
 
 
 def pm_test():
