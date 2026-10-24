@@ -67,11 +67,13 @@ def pm_credit():
 
 
 def pm_wakka1():
+    """First part of pac-man chomping sound, there is a gap of about 83ms between parts 1 and 2"""
     buf = _pm_wakka_sweep(83, 350, 816)
     return tobytes(buf)
 
 
 def pm_wakka2():
+    """Second part of pac-man chomping sound, there is a gap of about 83ms between parts 1 and 2"""
     buf = _pm_wakka_sweep(83, 816, 350)
     return tobytes(buf)
 
