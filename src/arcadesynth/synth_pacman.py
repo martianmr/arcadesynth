@@ -116,6 +116,18 @@ def pm_die():
     return tobytes(buf)
 
 
+def pm_powerup():
+    buf = new_buffer()
+    lengths = (970, 675, 457, 429, 341, 341, 277, 272, 272, 228, 228, 228, 210, 195, 195, 195, 182, 173, 170, 170, 170)
+    for i in range(len(lengths)):
+        ms = samples_to_ms(lengths[i]) * 0.916
+        f = 8 / (ms / 1000.0)
+        tempbuf = make_square(ms, 0.5, f)
+        envelope(tempbuf, 0, 0, 1.0, ms)
+        buf += tempbuf
+    return tobytes(buf)
+
+
 def pm_intermission():
     """Intermission music played after levels 2, 5 and 9"""
     buf = new_buffer()
