@@ -56,6 +56,19 @@ def _pm_inter_bass(ms, vol, freq):
     return buf
 
 
+def _pm_organ_sample(p, _):
+    return (sin(p * 4) / 4) + (triangle(p * 2) / 2) + (sin(p) / 2)
+
+
+def _pm_organ(ms, vol, freq):
+    n = ms_to_samples(ms)
+    buf = new_buffer()
+    for i in range(n):
+        a = samplept(_pm_organ_sample, i, freq)
+        buf.append(a * vol)
+    return buf
+
+
 def pm_credit():
     """Sound on entering a coin"""
     buf = new_buffer()
@@ -88,19 +101,6 @@ def pm_siren_high():
     """Higher siren later in level"""
     buf = make_sweep(350, 500, 1100, triangle, 0.25, 400)
     return tobytes(buf)
-
-
-def _pm_organ_sample(p, _):
-    return (sin(p * 4) / 4) + (triangle(p * 2) / 2) + (sin(p) / 2)
-
-
-def _pm_organ(ms, vol, freq):
-    n = ms_to_samples(ms)
-    buf = new_buffer()
-    for i in range(n):
-        a = samplept(_pm_organ_sample, i, freq)
-        buf.append(a * vol)
-    return buf
 
 
 def pm_die():
