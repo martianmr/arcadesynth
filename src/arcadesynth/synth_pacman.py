@@ -117,7 +117,7 @@ def pm_die():
     return tobytes(buf)
 
 
-def pm_engergizer():
+def pm_energizer():
     """Noise made after eating the big pill when ghosts turn blue, repeats"""
     buf = new_buffer()
     lengths = (970, 675, 457, 429, 341, 341, 277, 272, 272, 228, 228, 228, 210, 195, 195, 195, 182, 173, 170, 170, 170)
