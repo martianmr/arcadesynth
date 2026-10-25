@@ -165,6 +165,18 @@ def pm_eat_ghost():
     return tobytes(buf)
 
 
+def pm_eyes():
+    """Ghost eyes returning to pen"""
+    buf = make_sweep(270, 2100, 375, sin, 0.5)
+    return tobytes(buf)
+
+
+def pm_eat_fruit():
+    """Pac-man eating bonus fruit"""
+    buf = make_sweep(400, 600, 80, triangle, 0.5, 400)
+    return tobytes(buf)
+
+
 def pm_intermission():
     """Intermission music played after levels 2, 5 and 9"""
     buf = new_buffer()
