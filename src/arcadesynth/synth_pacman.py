@@ -91,15 +91,33 @@ def pm_wakka2():
     return tobytes(buf)
 
 
-def pm_siren_low():
-    """Lower siren at start of level"""
-    buf = make_sweep(400, 350, 950, triangle, 0.25, 400)
+def pm_siren1():
+    """Lower siren 1 at start of level"""
+    buf = make_sweep(400, 350, 900, triangle, 0.25, 400)
     return tobytes(buf)
 
 
-def pm_siren_high():
-    """Higher siren later in level"""
-    buf = make_sweep(350, 500, 1100, triangle, 0.25, 400)
+def pm_siren2():
+    """Higher siren 2"""
+    buf = make_sweep(365, 500, 1050, triangle, 0.25, 365)
+    return tobytes(buf)
+
+
+def pm_siren3():
+    """Higher siren 3"""
+    buf = make_sweep(330, 600, 1200, triangle, 0.25, 330)
+    return tobytes(buf)
+
+
+def pm_siren4():
+    """Higher siren 4"""
+    buf = make_sweep(300, 700, 1350, triangle, 0.25, 300)
+    return tobytes(buf)
+
+
+def pm_siren5():
+    """Higher siren 5"""
+    buf = make_sweep(265, 800, 1500, triangle, 0.25, 265)
     return tobytes(buf)
 
 
@@ -395,7 +413,7 @@ def pm_intro():
     return tobytes(buf)
 
 
-def pm_test():
+def pm_wakkatest():
     buf = new_buffer()
     buf = add(buf, make_sweep(400, 350, 950, triangle, 0.25, 400), 0)
     buf = add(buf, make_sweep(400, 350, 950, triangle, 0.25, 400), 400)
@@ -404,3 +422,6 @@ def pm_test():
     buf = add(buf, _pm_wakka_sweep(83, 350, 816), 80)
     buf = add(buf, _pm_wakka_sweep(83, 816, 350), 240)
     return tobytes(buf)
+
+def pm_sirentest():
+    return pm_siren1() + pm_siren2() + pm_siren3() + pm_siren4() + pm_siren5()
