@@ -4,7 +4,7 @@ import wave
 
 from arcadesynth import synth_pacman as pm
 
-SAMPLE_RATE = 44100
+FREQUENCY = 44100
 CHANNELS = 1
 _sound_ok = False
 WHITE = (255, 255, 255)
@@ -26,9 +26,9 @@ class Game:
         self.screen = pygame.display.set_mode((400, 400))
         self.clock = pygame.time.Clock()
         init_audio()
-        self.sound = pygame.mixer.Sound(pm.pm_eat_fruit())
+        self.sound = pygame.mixer.Sound(pm.pm_eat_ghost())
         sfile = wave.open('output.wav', 'w')
-        sfile.setframerate(SAMPLE_RATE)
+        sfile.setframerate(FREQUENCY)
         sfile.setnchannels(CHANNELS)
         sfile.setsampwidth(2)
         sfile.writeframesraw(self.sound.get_raw())
@@ -63,7 +63,7 @@ class Game:
 
 
 def main():
-    pygame.mixer.pre_init(frequency=SAMPLE_RATE, channels = CHANNELS)
+    pygame.mixer.pre_init(frequency=FREQUENCY, channels = CHANNELS)
     pygame.init()
     Game().run()
 

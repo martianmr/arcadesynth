@@ -138,9 +138,9 @@ def pm_die():
 def pm_energizer():
     """Noise made after eating the big pill when ghosts turn blue, repeats"""
     buf = new_buffer()
-    lengths = (970, 675, 457, 429, 341, 341, 277, 272, 272, 228, 228, 228, 210, 195, 195, 195, 182, 173, 170, 170, 170)
+    lengths = (20.15, 14.03, 9.5, 8.92, 7.09, 7.09, 5.76, 5.65, 5.65, 4.74, 4.74, 4.74, 4.37, 4.06, 4.06, 4.06, 3.79, 3.6, 3.54, 3.54, 3.54)
     for i in range(len(lengths)):
-        ms = samples_to_ms(lengths[i]) * 0.916
+        ms = lengths[i]
         f = 8 / (ms / 1000.0)
         tempbuf = make_square(ms, 0.5, f)
         envelope(tempbuf, 0, 0, 1.0, ms)
@@ -151,10 +151,11 @@ def pm_energizer():
 def pm_eat_ghost():
     """Noise made when eating a blue ghost"""
     buf = new_buffer()
-    lengths = (3273, 1330, 1226, 927, 800, 700, 680, 650, 630, 580, 560, 535, 500, 490, 470, 460, 440, 415, 415, 410, 410, 390, 390,
-               360, 360, 350, 350, 335, 335, 320, 320, 320, 320, 300, 300, 280, 280, 280, 280, 270, 270, 270, 270, 270, 270, 270, 240, 240)
+    lengths = (69.77, 28.35, 26.14, 19.76, 17.06, 14.93, 14.5, 13.86, 13.43, 12.37, 11.94, 11.41, 10.66, 10.45, 10.02, 9.81, 9.38, 8.85, 8.85,
+               8.74, 8.74, 8.32, 8.32, 7.68, 7.68, 7.47, 7.47, 7.15, 7.15, 6.83, 6.83,6.83, 6.83, 6.4, 6.4, 5.97, 5.97, 5.97, 5.97, 5.76, 5.76,
+               5.76, 5.76, 5.76, 5.76, 5.76, 5.12, 5.12)
     for i in range(len(lengths)):
-        ms = samples_to_ms(lengths[i]) * 0.94
+        ms = lengths[i]
         f = 8 / (ms / 1000.0)
         tempbuf = make_square(ms, 0.5, f)
         if i % 2 == 0:
@@ -175,6 +176,16 @@ def pm_eat_fruit():
     """Pac-man eating bonus fruit"""
     buf = make_sweep(400, 600, 80, triangle, 0.5, 400)
     return tobytes(buf)
+
+
+def pm_extralife():
+    """Pac-man extra life / extended play sound"""
+    output = new_buffer()
+    for _ in range(10):
+        buf = _pm_organ(200, 0.5, notehz("F#5"))
+        envelope(buf, 0, 200, 0.2, 0)
+        output += buf
+    return tobytes(output)
 
 
 def pm_intermission():
@@ -455,3 +466,4 @@ def pm_wakkatest():
 
 def pm_sirentest():
     return pm_siren1() + pm_siren2() + pm_siren3() + pm_siren4() + pm_siren5()
+

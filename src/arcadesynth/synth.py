@@ -7,10 +7,10 @@ import random
 import numpy as np
 from scipy.signal import butter, filtfilt, medfilt
 
-DEFAULT_FREQUENCY = 44100
-DEFAULT_CHANNELS = 2
+FREQUENCY = 44100
+CHANNELS = 2
 MAX_LEN = 3600000
-SAMPLE_RATE = DEFAULT_FREQUENCY * DEFAULT_CHANNELS
+SAMPLE_RATE = FREQUENCY * CHANNELS
 
 # ---------------------------------------------------------------------------
 # Internal functions
@@ -68,12 +68,14 @@ def sin(phase, special = None):
 # ---------------------------------------------------------------------------
 
 
-def init(frequency=DEFAULT_FREQUENCY, channels=DEFAULT_CHANNELS):
+def init(frequency=FREQUENCY, channels=CHANNELS):
     """Set up sample rate, do this first to avoid using defaults
 
     E.g. get these values from pygame with 'frequency, _, channels = pygame.mixer.get_init()'
     """
-    global SAMPLE_RATE
+    global SAMPLE_RATE, CHANNELS, FREQUENCY
+    CHANNELS = channels
+    FREQUENCY = frequency
     SAMPLE_RATE = frequency * channels
     return
 
@@ -145,7 +147,8 @@ def ms_to_samples(ms):
 
 
 def samples_to_ms(n):
-    """Convert number of samples to time in milliseconds"""
+    """Convert number of samples to time in milliseconds
+    """
     return (n / SAMPLE_RATE) * 1000.0
 
 
