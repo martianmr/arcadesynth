@@ -26,7 +26,7 @@ class Game:
         self.screen = pygame.display.set_mode((400, 400))
         self.clock = pygame.time.Clock()
         init_audio()
-        self.sound = pygame.mixer.Sound(pm.pm_powerup())
+        self.sound = pygame.mixer.Sound(pm.pm_engergizer())
         sfile = wave.open('output.wav', 'w')
         sfile.setframerate(SAMPLE_RATE)
         sfile.setnchannels(CHANNELS)
