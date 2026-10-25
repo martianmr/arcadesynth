@@ -104,6 +104,7 @@ def _pm_organ(ms, vol, freq):
 
 
 def pm_die():
+    """Noise made when pac-man dies"""
     buf = make_sweep(180, 725, 575, _pm_organ_sample, 0.6, 180)
     buf += make_sweep(200, 625, 510, _pm_organ_sample, 0.57, 200)
     buf += make_sweep(200, 590, 460, _pm_organ_sample, 0.54, 200)
