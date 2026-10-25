@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "arcadesynth"
-version = "1.1.1"
+version = "1.1.2"
 description = "Programmatically synthesize retro arcade sound effects"
 readme = "README.md"
 authors = [{ name = "C. Martin Richardson" }]
@@ -29,7 +29,7 @@ dev = ["pygame", "bumpver"]
 source = "https://github.com/martianmr/arcadesynth"
 
 [tool.bumpver]
-current_version = "1.1.1"
+current_version = "1.1.2"
 version_pattern = "MAJOR.MINOR.PATCH"
 commit_message = "bump version {old_version} -> {new_version}"
 tag_message = "{new_version}"
