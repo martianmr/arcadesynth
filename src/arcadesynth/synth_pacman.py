@@ -148,6 +148,23 @@ def pm_energizer():
     return tobytes(buf)
 
 
+def pm_eat_ghost():
+    """Noise made when eating a blue ghost"""
+    buf = new_buffer()
+    lengths = (3273, 1330, 1226, 927, 800, 700, 680, 650, 630, 580, 560, 535, 500, 490, 470, 460, 440, 415, 415, 410, 410, 390, 390, 360, 360, 350, 350, 335, 335,
+               320, 320, 320, 320, 300, 300, 280, 280, 280, 280, 270, 270, 270, 270, 270, 270, 270, 240, 240)
+    for i in range(len(lengths)):
+        ms = samples_to_ms(lengths[i]) * 0.94
+        f = 8 / (ms / 1000.0)
+        tempbuf = make_square(ms, 0.5, f)
+        if i % 2 == 0:
+            envelope(tempbuf, ms, 0, 1.0, 0)
+        else:
+            envelope(tempbuf, 0, 0, 1.0, ms)
+        buf += tempbuf
+    return tobytes(buf)
+
+
 def pm_intermission():
     """Intermission music played after levels 2, 5 and 9"""
     buf = new_buffer()
