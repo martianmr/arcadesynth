@@ -362,7 +362,7 @@ def make_sweep(ms=80, startf=1500.0, endf=400.0, shape=triangle, vol=1.0, repeat
             x = loop - x
         else:
             pass
-        f = (startf - ((startf - endf) * (x / period) ))
+        f = (startf - ((startf - endf) * (x / period)))
         a, phase = samplept(shape, i, f, harmonics, phase, special)
         buf.append(a * vol)
     return buf

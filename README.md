@@ -46,7 +46,7 @@ sound.play()
 
 ## Space Invaders
 
-There are some built-in hand-crafted synthesized sounds including those from the 1978 classic Space Invaders by Taito. Sounds in the arcade machine are produced on a Texas Instruments SN76477 'complex sound generator' chip supported by custom electronics. 
+There are some built-in hand-crafted synthesized sounds including those from the 1978 classic Space Invaders by Taito. Sounds in the arcade machine are produced on a Texas Instruments SN76477 'complex sound generator' chip supported by custom electronics.
 
 E.g. synthesize the sound made by the flying saucer blowing up in Space Invaders.
 
