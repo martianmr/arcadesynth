@@ -21,7 +21,7 @@ pip install arcadesynth
 - synth_example - some generic retro sound effects
 - synth_asteroids - sounds from the 1979 Atari game Asteroids
 - synth_spaceinvaders - sounds from the 1978 Taito game Space Invaders
-- synth_pacman - (WIP) sounds from the 1980 Namco game Pac-Man
+- synth_pacman - sounds from the 1980 Namco game Pac-Man
 
 ## Synth
 
