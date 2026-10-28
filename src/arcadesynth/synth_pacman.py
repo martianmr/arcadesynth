@@ -57,7 +57,7 @@ def _pm_inter_bass(ms, vol, freq):
 
 
 def _pm_organ_sample(p, _):
-    return (sin(p * 8) / 8) + (sin(p * 4) / 4) + (triangle(p * 2) / 2) + (sin(p) / 2)
+    return (sin(p * 8) / 12) + (sin(p * 4) / 6) + (triangle(p * 2) / 3) + (sin(p) / 3)
 
 
 def _pm_organ(ms, vol, freq):
