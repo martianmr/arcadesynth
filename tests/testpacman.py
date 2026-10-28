@@ -46,11 +46,15 @@ time.sleep(eat_ghost.get_length())
 for _ in range(5):
     eyes.play()
     time.sleep(eyes.get_length())
+for siren in siren2, siren3, siren4, siren5:
+    for _ in range(2):
+        siren.play()
+        time.sleep(siren.get_length())
 eat_fruit.play()
 time.sleep(eat_fruit.get_length())
 extralife.play()
 time.sleep(extralife.get_length())
 die.play()
-time.sleep(die.get_length() * 2)
+time.sleep(die.get_length())
 intermission.play()
 time.sleep(intermission.get_length())
