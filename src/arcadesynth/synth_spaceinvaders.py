@@ -17,7 +17,6 @@ def si_extralife():
         mute = e + 10
         envelope(buf, 30, 0, 0.9, 30, start=s, end=e)
         envelope(buf, 0, 0, 0.0, 0, start=e, end=mute)
-    echo(buf, 30, 0.4)
     return tobytes(buf)
 
 
@@ -27,7 +26,6 @@ def si_ufodie():
     high = 1320.0
     buf = make_sweep(2210, low, high, triangle, 0.5, 170)
     envelope(buf, 10, 0, 1.0, 350)
-    echo(buf, 20, 0.3)
     return tobytes(buf)
 
 
@@ -35,7 +33,7 @@ def si_ufo():
     """Space Invaders UFO on screen sound"""
     low = 400.0
     high = 1550.0
-    buf = make_sweep(170, low, high, square, 0.4, 170)
+    buf = make_sweep(170, low, high, square, 0.16, 170)
     return tobytes(buf)
 
 
@@ -52,8 +50,7 @@ def si_aliendie():
         tempbuf = make_sweep(params["length"][i], s, f, triangle, params["amplitude"][i], 0)
         envelope(tempbuf, 5, 0, 1.0, 5)
         buf += tempbuf
-    envelope(buf, 5, 0, 1.0, 300)
-    echo(buf, 20, 0.3)
+    envelope(buf, 5, 0, 0.9, 300)
     return tobytes(buf)
 
 
@@ -66,6 +63,7 @@ def si_explosion():
     buf = lowpass_filter(buf, 2600.0)
     buf = median_filter(buf)
     buf = lowpass_filter(buf, 2600.0)
+    buf = boost(buf, 1.1)
     envelope(buf, 20, 0, 1.0, 20, start=0, end=100)
     envelope(buf, 20, 0, 1.0, 20, start=100, end=180)
     envelope(buf, 5, 0, 0.1, 5, start=180, end=200)
@@ -98,7 +96,7 @@ def si_playerfire():
         end = highpass_filter(end, freq - 150, order=6)
     buf = start + mid + end
     noisalise(buf, gain=0.15)
-    envelope(buf, 10, 0, 1.0, 100)
+    envelope(buf, 10, 0, 0.4, 100)
     echo(buf, 40, 0.4)
     return tobytes(buf)
 
@@ -112,9 +110,8 @@ def si_march(freq=53.650):
     buf = make_sin(ms, 1.0, freq)
     buf = constrain(buf, 0.5, 1.0)
     buf = vmove(buf, -0.6)
-    buf = median_filter(buf)
+    buf = boost(buf, 1.6)
     envelope(buf, 5, 0, 1.0, 5)
-    echo(buf, 20, 0.3)
     return tobytes(buf)
 
 
