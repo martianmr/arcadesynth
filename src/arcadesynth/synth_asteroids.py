@@ -28,6 +28,16 @@ def as_bump(freq = 81.516):
     return tobytes(buf)
 
 
+def as_bump1():
+    """Lower periodic heartbeat bump"""
+    return as_bump(81.516)
+
+
+def as_bump2():
+    """Higher periodic heartbeat bump"""
+    return as_bump(87.500)
+
+
 def as_explode(freq = 200.0):
     """Asteroids things blowing up
     
@@ -45,6 +55,21 @@ def as_explode(freq = 200.0):
     return tobytes(buf)
 
 
+def as_explode_large():
+    """Large rock exploding"""
+    return as_explode(170.0)
+
+
+def as_explode_medium():
+    """Medium rock exploding"""
+    return as_explode(220.0)
+
+
+def as_explode_small():
+    """Small rock exploding"""
+    return as_explode(270.0)
+
+
 def as_ufo(ms, low, high):
     """Asteroids flying saucer on screen noise
     
@@ -53,6 +78,16 @@ def as_ufo(ms, low, high):
     """
     buf = make_sweep(ms, low, high, triangle, 0.5, ms)
     return tobytes(buf)
+
+
+def as_ufo_large():
+    """Large flying saucer noise"""
+    return as_ufo(180, 600.0, 1400.0)
+
+
+def as_ufo_small():
+    """Small flying saucer noise"""
+    return as_ufo(120, 800.0, 1600.0)
 
 
 def as_thrust():

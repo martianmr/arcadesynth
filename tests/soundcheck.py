@@ -2,7 +2,7 @@ import pygame
 import sys
 import wave
 
-from arcadesynth import synth_pacman as pm
+from arcadesynth import synth_asteroids as ast
 
 FREQUENCY = 44100
 CHANNELS = 1
@@ -15,7 +15,7 @@ def init_audio():
     try:
         pygame.mixer.init()
         frequency, _, channels = pygame.mixer.get_init()
-        pm.init(frequency, channels)
+        ast.init(frequency, channels)
         _sound_ok = True
     except pygame.error:
         _sound_ok = False
@@ -26,7 +26,7 @@ class Game:
         self.screen = pygame.display.set_mode((400, 400))
         self.clock = pygame.time.Clock()
         init_audio()
-        self.sound = pygame.mixer.Sound(pm.pm_intermission())
+        self.sound = pygame.mixer.Sound(ast.as_ufo_large())
         sfile = wave.open('output.wav', 'w')
         sfile.setframerate(FREQUENCY)
         sfile.setnchannels(CHANNELS)
