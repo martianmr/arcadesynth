@@ -118,3 +118,21 @@ def si_march(freq=53.650):
     return tobytes(buf)
 
 
+def si_march1():
+    """Space Invaders low-frequency heartbeat sound 1"""
+    return si_march(53.650)
+
+
+def si_march2():
+    """Space Invaders low-frequency heartbeat sound 2"""
+    return si_march(50.114)
+
+
+def si_march3():
+    """Space Invaders low-frequency heartbeat sound 3"""
+    return si_march(46.178)
+
+
+def si_march4():
+    """Space Invaders low-frequency heartbeat sound 4"""
+    return si_march(62.485)
