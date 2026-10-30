@@ -1,4 +1,4 @@
-# arcadesynth 1.1.3
+# arcadesynth 1.1.4
 
 Programmatically synthesize retro arcade sound effects in Python with arcadesynth.
 

@@ -3,4 +3,4 @@
 from importlib import resources
 
 # Version of the arcadesynth package
-__version__ = "1.1.3"
+__version__ = "1.1.4"
