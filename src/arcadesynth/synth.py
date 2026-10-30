@@ -371,6 +371,11 @@ def make_sweep(ms=80, startf=1500.0, endf=400.0, shape=triangle, vol=1.0, repeat
     return buf
 
 
+def make_silence(ms=500):
+    """Create a buffer filled with silence"""
+    return new_buffer([0.0] * ms_to_samples(ms))
+
+
 # ---------------------------------------------------------------------------
 # Functions to manipulate buffers in place
 # ---------------------------------------------------------------------------

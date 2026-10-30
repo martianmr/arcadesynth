@@ -56,3 +56,7 @@ def fadeup(ms=999, a1=0.2, a2=0.8):
     buf = make_triangle(ms, 1.0, 261.6256)
     buf = fade(buf, a1, a2)
     return tobytes(buf)
+
+
+def silence(ms=500):
+    return make_silence(ms)
