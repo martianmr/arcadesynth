@@ -1,4 +1,4 @@
-"""synth - programmatically synthesize retro arcade sound effects
+"""functions to programmatically synthesize retro arcade sound effects
 """
 
 import array
@@ -81,6 +81,7 @@ def init(frequency=FREQUENCY, channels=CHANNELS):
 
 
 def get_init():
+    """Return the configured calculated sample rate"""
     return SAMPLE_RATE
 
 

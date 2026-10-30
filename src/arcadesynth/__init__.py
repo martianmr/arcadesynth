@@ -1,4 +1,4 @@
-# __init__.py
+"""modules to programmatically synthesize retro arcade sound effects"""
 
 from importlib import resources
 
