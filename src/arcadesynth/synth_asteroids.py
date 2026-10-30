@@ -5,7 +5,7 @@ from .synth import *
 def as_playerfire():
     """Asteroids player firing sound"""
     ms = 260
-    buf = make_sweep(ms, 820, 100, square, 1.0, 0, special=-0.8)
+    buf = make_sweep(ms, 820, 100, square, 0.5, 0, special=-0.8)
     envelope(buf, 0, ms, 0.2, 0)
     envelope(buf, 0, 100, 0.5, 0, 0, 100)
     envelope(buf, 0, 0, 0.5, 0, 100, ms)
@@ -15,7 +15,7 @@ def as_playerfire():
 def as_ufofire():
     """Asteroids flying saucer firing sound"""
     ms = 260
-    buf = make_sweep(ms, 820, 650, square, 1.0, 0, special=-0.8)
+    buf = make_sweep(ms, 820, 650, square, 0.5, 0, special=-0.8)
     return tobytes(buf)
 
 
@@ -24,7 +24,7 @@ def as_bump(freq = 81.516):
     
     Expected frequencies in Hz, 81.516, 87.500
     """
-    buf = make_square(50, 1.0, freq)
+    buf = make_square(50, 0.5, freq)
     return tobytes(buf)
 
 
