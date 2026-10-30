@@ -1,4 +1,4 @@
-"""Test all of the pac-man sounds"""
+"""Test all of the asteroids sounds"""
 
 import pygame
 import time
