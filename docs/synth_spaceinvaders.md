@@ -2,7 +2,7 @@
 
 # arcadesynth.synth\_spaceinvaders
 
-Space Invaders sound effects
+sounds from the 1978 Taito game Space Invaders
 
 <a id="arcadesynth.synth_spaceinvaders.si_extralife"></a>
 

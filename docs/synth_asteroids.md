@@ -2,7 +2,7 @@
 
 # arcadesynth.synth\_asteroids
 
-Asteroids sound effects
+sounds from the 1979 Atari game Asteroids
 
 <a id="arcadesynth.synth_asteroids.as_playerfire"></a>
 

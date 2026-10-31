@@ -2,7 +2,7 @@
 
 # arcadesynth.synth\_sample
 
-Basic sample sounds
+some simple basic sounds
 
 <a id="arcadesynth.synth_sample.sawtooth_wave"></a>
 

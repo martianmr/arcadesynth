@@ -2,7 +2,7 @@
 
 # arcadesynth.synth\_example
 
-Generic retro sound effects
+some generic retro sound effects
 
 <a id="arcadesynth.synth_example.eg_gunshot"></a>
 

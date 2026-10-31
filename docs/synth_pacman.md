@@ -2,7 +2,7 @@
 
 # arcadesynth.synth\_pacman
 
-Pac-Man sound effects
+sounds from the 1980 Namco game Pac-Man
 
 <a id="arcadesynth.synth_pacman.pm_credit"></a>
 
