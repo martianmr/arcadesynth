@@ -1,4 +1,4 @@
-"""Basic sample sounds"""
+"""some simple basic sounds"""
 from .synth import *
 
 

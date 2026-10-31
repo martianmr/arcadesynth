@@ -1,4 +1,4 @@
-"""Space Invaders sound effects"""
+"""sounds from the 1978 Taito game Space Invaders"""
 from .synth import *
 
 

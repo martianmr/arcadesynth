@@ -1,4 +1,4 @@
-"""Generic retro sound effects"""
+"""some generic retro sound effects"""
 from .synth import *
 
 

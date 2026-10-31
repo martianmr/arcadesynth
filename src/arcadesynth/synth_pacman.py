@@ -1,4 +1,4 @@
-"""Pac-Man sound effects"""
+"""sounds from the 1980 Namco game Pac-Man"""
 from .synth import *
 
 

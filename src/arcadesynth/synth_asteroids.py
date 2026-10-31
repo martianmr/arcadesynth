@@ -1,4 +1,4 @@
-"""Asteroids sound effects"""
+"""sounds from the 1979 Atari game Asteroids"""
 from .synth import *
 
 

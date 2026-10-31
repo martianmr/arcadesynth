@@ -1,5 +1,4 @@
-"""functions to programmatically synthesize retro arcade sound effects
-"""
+"""functions to programmatically synthesize retro arcade sound effects"""
 
 import array
 import math
