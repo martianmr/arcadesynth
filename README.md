@@ -1,6 +1,6 @@
 # arcadesynth 1.1.6
 
-Programmatically synthesize retro arcade sound effects in Python with arcadesynth.
+Programmatically synthesize retro arcade sound effects in Python with [arcadesynth](https://github.com/martianmr/arcadesynth/blob/main/docs/arcadesynth.md).
 
 This utility can be used to generate your own custom sound effects in code as an alternative to using sound assets. It also provides some hand-crafted sounds from the Golden age of arcade video games.
 
