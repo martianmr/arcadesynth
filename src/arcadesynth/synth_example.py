@@ -1,4 +1,7 @@
-"""some generic retro sound effects"""
+"""some generic retro sound effects
+
+[source](../src/arcadesynth/synth_example.py)
+"""
 from .synth import *
 
 

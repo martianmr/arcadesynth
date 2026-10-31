@@ -1,4 +1,7 @@
-"""sounds from the 1978 Taito game Space Invaders"""
+"""sounds from the 1978 Taito game Space Invaders
+
+[source](../src/arcadesynth/synth_spaceinvaders.py)
+"""
 from .synth import *
 
 

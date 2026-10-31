@@ -1,4 +1,7 @@
-"""modules to programmatically synthesize retro arcade sound effects"""
+"""modules to programmatically synthesize retro arcade sound effects
+
+[source](../src/arcadesynth/__init__.py)
+"""
 
 from importlib import resources
 

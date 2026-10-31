@@ -1,4 +1,7 @@
-"""functions to programmatically synthesize retro arcade sound effects"""
+"""functions to programmatically synthesize retro arcade sound effects
+
+[source](../src/arcadesynth/synth.py)
+"""
 
 import array
 import math

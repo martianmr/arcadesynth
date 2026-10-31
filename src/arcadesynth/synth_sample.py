@@ -1,4 +1,7 @@
-"""some simple basic sounds"""
+"""some simple basic sounds
+
+[source](../src/arcadesynth/synth_sample.py)
+"""
 from .synth import *
 
 

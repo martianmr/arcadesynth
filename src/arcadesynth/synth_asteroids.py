@@ -1,4 +1,7 @@
-"""sounds from the 1979 Atari game Asteroids"""
+"""sounds from the 1979 Atari game Asteroids
+
+[source](../src/arcadesynth/synth_asteroids.py)
+"""
 from .synth import *
 
 
