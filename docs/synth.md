@@ -11,7 +11,7 @@ functions to programmatically synthesize retro arcade sound effects
 #### sawtooth
 
 ```python
-def sawtooth(phase, special=None)
+def sawtooth(phase, _=None)
 ```
 
 Calculate amplitude for a sawtooth wave at the given phase
@@ -21,7 +21,7 @@ Calculate amplitude for a sawtooth wave at the given phase
 #### triangle
 
 ```python
-def triangle(phase, special=None)
+def triangle(phase, _=None)
 ```
 
 Calculate amplitude for a triangle wave at the given phase
@@ -31,24 +31,24 @@ Calculate amplitude for a triangle wave at the given phase
 #### square
 
 ```python
-def square(phase, special=None)
+def square(phase, pwm=None)
 ```
 
 Calculate amplitude for a square wave at the given phase
 
-special can be specified as a cutoff for generating PWM
+'pwm' can be specified as a cutoff for generating PWM
 
 <a id="arcadesynth.synth.sin"></a>
 
 #### sin
 
 ```python
-def sin(phase, special=None)
+def sin(phase, precision=None)
 ```
 
 Calculate amplitude for a sine wave at the given phase
 
-special can be used to simulate lower precision math
+'precision' can be set to an integer value to simulate lower precision math
 
 <a id="arcadesynth.synth.init"></a>
 

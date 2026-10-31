@@ -38,31 +38,31 @@ def _butterworth_filter(buf, cutoff, type='lowpass', order=2):
 # ---------------------------------------------------------------------------
 
 
-def sawtooth(phase, special = None):
+def sawtooth(phase, _=None):
     """Calculate amplitude for a sawtooth wave at the given phase"""
     return (2.0 / math.pi) * ((phase / 2.0) % math.pi) - 1.0
 
 
-def triangle(phase, special = None):
+def triangle(phase, _=None):
     """Calculate amplitude for a triangle wave at the given phase"""
     return ((2.0 / math.pi) * (math.pi - abs(phase % (2.0 * math.pi) - math.pi)) - 1.0)
 
 
-def square(phase, special = None):
+def square(phase, pwm=None):
     """Calculate amplitude for a square wave at the given phase
     
-    special can be specified as a cutoff for generating PWM
+    'pwm' can be specified as a cutoff for generating PWM
     """
-    cutoff = 0.0 if special is None else special
+    cutoff = 0.0 if pwm is None else pwm
     return 1.0 if math.sin(phase) > cutoff else -1.0
 
 
-def sin(phase, special = None):
+def sin(phase, precision=None):
     """Calculate amplitude for a sine wave at the given phase
     
-    special can be used to simulate lower precision math
+    'precision' can be set to an integer value to simulate lower precision math
     """
-    return math.sin(phase) if special is None else round((math.sin(phase) / special), 1) * special
+    return math.sin(phase) if precision is None else round((math.sin(phase) / precision), 1) * precision
 
 
 # ---------------------------------------------------------------------------
@@ -314,7 +314,7 @@ def make_square(ms, vol=0.2, freq=140.0, pwm=None):
     n = ms_to_samples(ms)
     buf = new_buffer()
     for i in range(n):
-        buf.append(samplept(square, i, freq, 0, special=pwm) * vol)
+        buf.append(samplept(square, i, freq, 0, [], pwm) * vol)
     return buf
 
 
@@ -323,8 +323,7 @@ def make_sin(ms=600, vol=0.4, freq=50.0, harmonics=0, precision=None):
     n = ms_to_samples(ms)
     buf = new_buffer()
     for i in range(n):
-        a = samplept(sin, i, freq, harmonics, special=precision)
-        buf.append(a * vol)
+        buf.append(samplept(sin, i, freq, harmonics, [], precision) * vol)
     return buf
 
 
