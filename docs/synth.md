@@ -4,6 +4,8 @@
 
 functions to programmatically synthesize retro arcade sound effects
 
+[source](../src/arcadesynth/synth.py)
+
 <a id="arcadesynth.synth.sawtooth"></a>
 
 #### sawtooth

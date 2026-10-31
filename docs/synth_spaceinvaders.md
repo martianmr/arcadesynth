@@ -4,6 +4,8 @@
 
 sounds from the 1978 Taito game Space Invaders
 
+[source](../src/arcadesynth/synth_spaceinvaders.py)
+
 <a id="arcadesynth.synth_spaceinvaders.si_extralife"></a>
 
 #### si\_extralife

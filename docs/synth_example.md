@@ -4,6 +4,8 @@
 
 some generic retro sound effects
 
+[source](../src/arcadesynth/synth_example.py)
+
 <a id="arcadesynth.synth_example.eg_gunshot"></a>
 
 #### eg\_gunshot

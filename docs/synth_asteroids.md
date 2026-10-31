@@ -4,6 +4,8 @@
 
 sounds from the 1979 Atari game Asteroids
 
+[source](../src/arcadesynth/synth_asteroids.py)
+
 <a id="arcadesynth.synth_asteroids.as_playerfire"></a>
 
 #### as\_playerfire

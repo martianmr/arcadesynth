@@ -4,6 +4,8 @@
 
 some simple basic sounds
 
+[source](../src/arcadesynth/synth_sample.py)
+
 <a id="arcadesynth.synth_sample.sawtooth_wave"></a>
 
 #### sawtooth\_wave
