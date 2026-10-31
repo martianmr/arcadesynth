@@ -50,6 +50,19 @@ Calculate amplitude for a sine wave at the given phase
 
 'precision' can be set to an integer value to simulate lower precision math
 
+<a id="arcadesynth.synth.synth_organ"></a>
+
+#### synth\_organ
+
+```python
+def synth_organ(p, _=None)
+```
+
+Calculate amplitude for a synth organ sound at the given phase
+
+Combination of octave harmonics of sine waves and a triangle wave at first octave to give a synth organ sound
+As used in pac-man intermission music and pac-man die sounds
+
 <a id="arcadesynth.synth.init"></a>
 
 #### init
@@ -307,6 +320,18 @@ def make_sin(ms=600, vol=0.4, freq=50.0, harmonics=0, precision=None)
 ```
 
 Make a sine wave
+
+<a id="arcadesynth.synth.make_synth_organ"></a>
+
+#### make\_synth\_organ
+
+```python
+def make_synth_organ(ms, vol, freq)
+```
+
+Combination of octave harmonics of sine waves and a triangle wave at first octave to give a synth organ sound
+
+As used in pac-man intermission music and pac-man die sounds
 
 <a id="arcadesynth.synth.make_white"></a>
 

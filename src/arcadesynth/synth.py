@@ -65,6 +65,15 @@ def sin(phase, precision=None):
     return math.sin(phase) if precision is None else round((math.sin(phase) / precision), 1) * precision
 
 
+def synth_organ(p, _=None):
+    """Calculate amplitude for a synth organ sound at the given phase
+    
+    Combination of octave harmonics of sine waves and a triangle wave at first octave to give a synth organ sound
+    As used in pac-man intermission music and pac-man die sounds
+    """
+    return (sin(p * 8) / 12) + (sin(p * 4) / 6) + (triangle(p * 2) / 3) + (sin(p) / 3)
+
+
 # ---------------------------------------------------------------------------
 # Initialisation functions
 # ---------------------------------------------------------------------------
@@ -324,6 +333,18 @@ def make_sin(ms=600, vol=0.4, freq=50.0, harmonics=0, precision=None):
     buf = new_buffer()
     for i in range(n):
         buf.append(samplept(sin, i, freq, harmonics, [], precision) * vol)
+    return buf
+
+
+def make_synth_organ(ms, vol, freq):
+    """Combination of octave harmonics of sine waves and a triangle wave at first octave to give a synth organ sound
+    
+    As used in pac-man intermission music and pac-man die sounds
+    """
+    n = ms_to_samples(ms)
+    buf = new_buffer()
+    for i in range(n):
+        buf.append(samplept(synth_organ, i, freq) * vol)
     return buf
 
 
