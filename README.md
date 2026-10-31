@@ -8,7 +8,7 @@ The idea was inspired by sound generation on 1980s 8-bit microcomputers which so
 
 ## Installation
 
-arcadesynth can be installed via pip
+[arcadesynth](https://pypi.org/project/arcadesynth/) can be installed via pip
 
 ```bash
 pip install arcadesynth
