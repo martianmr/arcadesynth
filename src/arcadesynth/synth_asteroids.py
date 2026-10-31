@@ -1,5 +1,7 @@
 """sounds from the 1979 Atari game Asteroids
 
+The original arcade machine uses custom electronics to generate sounds.
+
 [source](../src/arcadesynth/synth_asteroids.py)
 """
 from .synth import *

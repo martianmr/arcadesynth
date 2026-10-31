@@ -1,5 +1,7 @@
 """sounds from the 1978 Taito game Space Invaders
 
+The original arcade machine uses a Texas Instruments SN76477 'complex sound generator' chip
+
 [source](../src/arcadesynth/synth_spaceinvaders.py)
 """
 from .synth import *
