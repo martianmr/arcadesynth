@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Python: module arcadesynth.synth</title>
+</head><body>
+
+<table class="heading">
+<tr class="heading-text decor">
+<td class="title">&nbsp;<br><strong class="title"><a href="arcadesynth.html" class="white">arcadesynth</a>.synth</strong></td>
+<td class="extra"><a href=".">index</a><br><a href="https://github.com/martianmr/arcadesynth/blob/main/src/arcadesynth/synth.py">/src/arcadesynth/synth.py</a></td></tr></table>
+    <p><span class="code">functions&nbsp;to&nbsp;programmatically&nbsp;synthesize&nbsp;retro&nbsp;arcade&nbsp;sound&nbsp;effects</span></p>
+<p>
+<table class="section">
+<tr class="decor pkg-content-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Modules</strong></td></tr>
+    
+<tr><td class="decor pkg-content-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
+<td class="singlecolumn"><table><tr><td class="multicolumn"><a href="array.html">array</a><br>
+</td><td class="multicolumn"><a href="math.html">math</a><br>
+</td><td class="multicolumn"><a href="numpy.html">numpy</a><br>
+</td><td class="multicolumn"><a href="random.html">random</a><br>
+</td></tr></table></td></tr></table><p>
+<table class="section">
+<tr class="decor functions-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Functions</strong></td></tr>
+    
+<tr><td class="decor functions-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
+<td class="singlecolumn"><dl><dt><a name="-add"><strong>add</strong></a>(target, source, offset=0)</dt><dd><span class="code">Add&nbsp;the&nbsp;source&nbsp;sample&nbsp;to&nbsp;the&nbsp;target&nbsp;buffer</span></dd></dl>
+ <dl><dt><a name="-boost"><strong>boost</strong></a>(buf, gain)</dt><dd><span class="code">Apply&nbsp;gain&nbsp;to&nbsp;buffer</span></dd></dl>
+ <dl><dt><a name="-combine"><strong>combine</strong></a>(buf1, buf2)</dt><dd><span class="code">Combine&nbsp;2&nbsp;buffers&nbsp;giving&nbsp;average&nbsp;amplitude&nbsp;for&nbsp;each&nbsp;sample</span></dd></dl>
+ <dl><dt><a name="-constrain"><strong>constrain</strong></a>(buf, lower, upper)</dt><dd><span class="code">Clip&nbsp;a&nbsp;buffer&nbsp;to&nbsp;an&nbsp;upper&nbsp;and&nbsp;lower&nbsp;constraint</span></dd></dl>
+ <dl><dt><a name="-echo"><strong>echo</strong></a>(buf, ms, vol)</dt><dd><span class="code">Modify&nbsp;buffer&nbsp;in&nbsp;place&nbsp;to&nbsp;add&nbsp;a&nbsp;short&nbsp;delay&nbsp;to&nbsp;the&nbsp;sound</span></dd></dl>
+ <dl><dt><a name="-envelope"><strong>envelope</strong></a>(buf, attack, decay, sustain, release, start=0, end=3600000)</dt><dd><span class="code">Modify&nbsp;a&nbsp;buffer&nbsp;in&nbsp;place&nbsp;with&nbsp;an&nbsp;ADSR&nbsp;envelope</span></dd></dl>
+ <dl><dt><a name="-fade"><strong>fade</strong></a>(buf, a1, a2)</dt><dd><span class="code">Change&nbsp;start&nbsp;and&nbsp;end&nbsp;amplitude&nbsp;and&nbsp;scale&nbsp;smoothly&nbsp;between</span></dd></dl>
+ <dl><dt><a name="-get_init"><strong>get_init</strong></a>()</dt><dd><span class="code">Return&nbsp;the&nbsp;configured&nbsp;calculated&nbsp;sample&nbsp;rate</span></dd></dl>
+ <dl><dt><a name="-highpass_filter"><strong>highpass_filter</strong></a>(buf, cutoff, order=6)</dt><dd><span class="code">Apply&nbsp;a&nbsp;filter&nbsp;that&nbsp;progressively&nbsp;removes&nbsp;frequencies&nbsp;below&nbsp;the&nbsp;cutoff</span></dd></dl>
+ <dl><dt><a name="-init"><strong>init</strong></a>(frequency=44100, channels=2)</dt><dd><span class="code">Set&nbsp;up&nbsp;sample&nbsp;rate,&nbsp;do&nbsp;this&nbsp;first&nbsp;to&nbsp;avoid&nbsp;using&nbsp;defaults<br>
+&nbsp;<br>
+E.g.&nbsp;get&nbsp;these&nbsp;values&nbsp;from&nbsp;pygame&nbsp;with&nbsp;'frequency,&nbsp;_,&nbsp;channels&nbsp;=&nbsp;pygame.mixer.<a href="#-get_init">get_init</a>()'</span></dd></dl>
+ <dl><dt><a name="-lowpass_filter"><strong>lowpass_filter</strong></a>(buf, cutoff, order=6)</dt><dd><span class="code">Apply&nbsp;a&nbsp;filter&nbsp;that&nbsp;progressively&nbsp;removes&nbsp;frequencies&nbsp;above&nbsp;the&nbsp;cutoff</span></dd></dl>
+ <dl><dt><a name="-make_brown"><strong>make_brown</strong></a>(ms=600, vol=0.1, freq=150.0, order=1)</dt><dd><span class="code">Apply&nbsp;a&nbsp;lowpass&nbsp;filter&nbsp;to&nbsp;white&nbsp;noise&nbsp;to&nbsp;produce&nbsp;brown&nbsp;noise</span></dd></dl>
+ <dl><dt><a name="-make_sawtooth"><strong>make_sawtooth</strong></a>(ms, vol=0.2, freq=140.0)</dt><dd><span class="code">Make&nbsp;a&nbsp;sawtooth&nbsp;wave</span></dd></dl>
+ <dl><dt><a name="-make_silence"><strong>make_silence</strong></a>(ms=500)</dt><dd><span class="code">Create&nbsp;a&nbsp;buffer&nbsp;filled&nbsp;with&nbsp;silence</span></dd></dl>
+ <dl><dt><a name="-make_sin"><strong>make_sin</strong></a>(ms=600, vol=0.4, freq=50.0, harmonics=0, precision=None)</dt><dd><span class="code">Make&nbsp;a&nbsp;sine&nbsp;wave</span></dd></dl>
+ <dl><dt><a name="-make_square"><strong>make_square</strong></a>(ms, vol=0.2, freq=140.0, pwm=None)</dt><dd><span class="code">Make&nbsp;a&nbsp;square&nbsp;wave</span></dd></dl>
+ <dl><dt><a name="-make_sweep"><strong>make_sweep</strong></a>(ms=80, startf=1500.0, endf=400.0, shape=&lt;function triangle at 0x7e75c5f8f880&gt;, vol=1.0, repeat=0, harmonics=0, special=None)</dt><dd><span class="code">Create&nbsp;a&nbsp;buffer&nbsp;that&nbsp;starts&nbsp;at&nbsp;frequency&nbsp;startf&nbsp;and&nbsp;ends&nbsp;at&nbsp;endf<br>
+&nbsp;<br>
+If&nbsp;repeat&nbsp;is&nbsp;not&nbsp;zero&nbsp;the&nbsp;cycle&nbsp;goes&nbsp;from&nbsp;startf&nbsp;to&nbsp;endf&nbsp;and&nbsp;back&nbsp;to&nbsp;startf&nbsp;in&nbsp;repeat&nbsp;milliseconds&nbsp;and<br>
+continues&nbsp;to&nbsp;cycle&nbsp;until&nbsp;ms&nbsp;milliseconds&nbsp;have&nbsp;been&nbsp;filled.</span></dd></dl>
+ <dl><dt><a name="-make_triangle"><strong>make_triangle</strong></a>(ms, vol=0.2, freq=140.0)</dt><dd><span class="code">Make&nbsp;a&nbsp;triangle&nbsp;wave</span></dd></dl>
+ <dl><dt><a name="-make_white"><strong>make_white</strong></a>(ms=600, vol=0.4, smooth=False)</dt><dd><span class="code">Fill&nbsp;a&nbsp;buffer&nbsp;with&nbsp;random&nbsp;amplitudes&nbsp;to&nbsp;produce&nbsp;white&nbsp;noise<br>
+&nbsp;<br>
+If&nbsp;smooth&nbsp;is&nbsp;False&nbsp;use&nbsp;values&nbsp;of&nbsp;1.0&nbsp;or&nbsp;-1.0&nbsp;randomly&nbsp;to&nbsp;produce&nbsp;white&nbsp;noise&nbsp;similar&nbsp;to&nbsp;the&nbsp;SN76477&nbsp;Complex&nbsp;Sound&nbsp;Generator&nbsp;chip,<br>
+otherwise&nbsp;generate&nbsp;purely&nbsp;random&nbsp;amplitudes&nbsp;which&nbsp;gives&nbsp;a&nbsp;more&nbsp;natural&nbsp;noise.</span></dd></dl>
+ <dl><dt><a name="-median_filter"><strong>median_filter</strong></a>(buf)</dt><dd><span class="code">Perform&nbsp;a&nbsp;median&nbsp;filter</span></dd></dl>
+ <dl><dt><a name="-ms_to_samples"><strong>ms_to_samples</strong></a>(ms)</dt><dd><span class="code">Convert&nbsp;time&nbsp;in&nbsp;milliseconds&nbsp;to&nbsp;number&nbsp;of&nbsp;samples</span></dd></dl>
+ <dl><dt><a name="-new_buffer"><strong>new_buffer</strong></a>(content=[])</dt><dd><span class="code">Create&nbsp;a&nbsp;new&nbsp;buffer&nbsp;of&nbsp;floating&nbsp;point&nbsp;amplitudes</span></dd></dl>
+ <dl><dt><a name="-noisalise"><strong>noisalise</strong></a>(buf, vol=1.0, gain=1.0)</dt><dd><span class="code">Apply&nbsp;gain&nbsp;to&nbsp;buffer&nbsp;proportional&nbsp;to&nbsp;mean&nbsp;amplitude,&nbsp;useful&nbsp;for&nbsp;restoring&nbsp;a&nbsp;constant&nbsp;RMS&nbsp;after&nbsp;processing&nbsp;noise</span></dd></dl>
+ <dl><dt><a name="-notehz"><strong>notehz</strong></a>(note)</dt><dd><span class="code">For&nbsp;a&nbsp;given&nbsp;note&nbsp;e.g.&nbsp;"A4",&nbsp;return&nbsp;the&nbsp;frequency&nbsp;in&nbsp;Hz</span></dd></dl>
+ <dl><dt><a name="-pad"><strong>pad</strong></a>(buf, length)</dt><dd><span class="code">Pad&nbsp;out&nbsp;a&nbsp;buffer&nbsp;with&nbsp;zeroes&nbsp;to&nbsp;length</span></dd></dl>
+ <dl><dt><a name="-reverse"><strong>reverse</strong></a>(buf)</dt><dd><span class="code">Return&nbsp;backwards&nbsp;copy&nbsp;of&nbsp;the&nbsp;buffer</span></dd></dl>
+ <dl><dt><a name="-samplept"><strong>samplept</strong></a>(func, i, f, harmonics=0, p=[], special=None)</dt><dd><span class="code">Calculate&nbsp;amplitude&nbsp;of&nbsp;a&nbsp;sample&nbsp;for&nbsp;a&nbsp;buffer&nbsp;position<br>
+&nbsp;<br>
+Given&nbsp;a&nbsp;function&nbsp;to&nbsp;calculate&nbsp;amplitude&nbsp;of&nbsp;a&nbsp;wave&nbsp;(func)&nbsp;for&nbsp;a&nbsp;buffer&nbsp;position&nbsp;(i)<br>
+and&nbsp;frequency&nbsp;(f)&nbsp;calculate&nbsp;and&nbsp;return&nbsp;the&nbsp;amplitude.<br>
+If&nbsp;harmonics&nbsp;is&nbsp;not&nbsp;zero&nbsp;also&nbsp;add&nbsp;in&nbsp;the&nbsp;amplitude&nbsp;of&nbsp;the&nbsp;given&nbsp;order&nbsp;of&nbsp;harmonics.<br>
+If&nbsp;frequency&nbsp;is&nbsp;not&nbsp;constant&nbsp;throughout&nbsp;the&nbsp;buffer,&nbsp;track&nbsp;the&nbsp;current&nbsp;phase&nbsp;during&nbsp;the<br>
+building&nbsp;process&nbsp;and&nbsp;pass&nbsp;the&nbsp;current&nbsp;phase&nbsp;of&nbsp;the&nbsp;primary&nbsp;and&nbsp;any&nbsp;harmonics&nbsp;through&nbsp;<br>
+the&nbsp;list&nbsp;(p),&nbsp;otherwise&nbsp;phase&nbsp;can&nbsp;be&nbsp;calculated&nbsp;on&nbsp;the&nbsp;fly.</span></dd></dl>
+ <dl><dt><a name="-samples_to_ms"><strong>samples_to_ms</strong></a>(n)</dt><dd><span class="code">Convert&nbsp;number&nbsp;of&nbsp;samples&nbsp;to&nbsp;time&nbsp;in&nbsp;milliseconds</span></dd></dl>
+ <dl><dt><a name="-sawtooth"><strong>sawtooth</strong></a>(phase, special=None)</dt><dd><span class="code">Calculate&nbsp;amplitude&nbsp;for&nbsp;a&nbsp;sawtooth&nbsp;wave&nbsp;at&nbsp;the&nbsp;given&nbsp;phase</span></dd></dl>
+ <dl><dt><a name="-sequence"><strong>sequence</strong></a>(beatlen, notes, finetune=1.0)</dt><dd><span class="code">Sequence&nbsp;notes&nbsp;to&nbsp;a&nbsp;buffer&nbsp;for&nbsp;creating&nbsp;music<br>
+&nbsp;<br>
+'beatlen'&nbsp;is&nbsp;the&nbsp;length&nbsp;of&nbsp;each&nbsp;beat&nbsp;in&nbsp;the&nbsp;sequence&nbsp;in&nbsp;milliseconds.<br>
+'notes'&nbsp;is&nbsp;a&nbsp;list&nbsp;of&nbsp;notes,&nbsp;each&nbsp;element&nbsp;of&nbsp;the&nbsp;list&nbsp;is&nbsp;in&nbsp;the&nbsp;following&nbsp;format:<br>
+[note_name,&nbsp;start_beat,&nbsp;length_in_beats,&nbsp;velocity,&nbsp;creation_function]<br>
+The&nbsp;creation&nbsp;function&nbsp;must&nbsp;have&nbsp;the&nbsp;parameter&nbsp;format&nbsp;(ms,&nbsp;volume,&nbsp;frequency)<br>
+finetune&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;make&nbsp;the&nbsp;notes&nbsp;consistently&nbsp;slightly&nbsp;sharp/flat.</span></dd></dl>
+ <dl><dt><a name="-sin"><strong>sin</strong></a>(phase, special=None)</dt><dd><span class="code">Calculate&nbsp;amplitude&nbsp;for&nbsp;a&nbsp;sine&nbsp;wave&nbsp;at&nbsp;the&nbsp;given&nbsp;phase<br>
+&nbsp;<br>
+special&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;simulate&nbsp;lower&nbsp;precision&nbsp;math</span></dd></dl>
+ <dl><dt><a name="-slice"><strong>slice</strong></a>(buf, start, end)</dt><dd><span class="code">Extract&nbsp;a&nbsp;section&nbsp;of&nbsp;a&nbsp;buffer&nbsp;with&nbsp;start&nbsp;and&nbsp;end&nbsp;times&nbsp;in&nbsp;ms</span></dd></dl>
+ <dl><dt><a name="-square"><strong>square</strong></a>(phase, special=None)</dt><dd><span class="code">Calculate&nbsp;amplitude&nbsp;for&nbsp;a&nbsp;square&nbsp;wave&nbsp;at&nbsp;the&nbsp;given&nbsp;phase<br>
+&nbsp;<br>
+special&nbsp;can&nbsp;be&nbsp;specified&nbsp;as&nbsp;a&nbsp;cutoff&nbsp;for&nbsp;generating&nbsp;PWM</span></dd></dl>
+ <dl><dt><a name="-tobytes"><strong>tobytes</strong></a>(buf)</dt><dd><span class="code">Convert&nbsp;buffer&nbsp;with&nbsp;range&nbsp;-1.0&nbsp;to&nbsp;1.0&nbsp;to&nbsp;short&nbsp;signed&nbsp;integers&nbsp;then&nbsp;output&nbsp;as&nbsp;a&nbsp;byte&nbsp;stream<br>
+&nbsp;<br>
+Use&nbsp;this&nbsp;to&nbsp;convert&nbsp;a&nbsp;sound&nbsp;held&nbsp;in&nbsp;internal&nbsp;format&nbsp;to&nbsp;a&nbsp;byte&nbsp;list&nbsp;for&nbsp;external&nbsp;processing,&nbsp;e.g.&nbsp;by<br>
+pygame.</span></dd></dl>
+ <dl><dt><a name="-tremolo"><strong>tremolo</strong></a>(buf, freq, intensity, shape=&lt;function sin at 0x7e75b1409260&gt;, special=None)</dt><dd><span class="code">Modify&nbsp;a&nbsp;buffer&nbsp;in&nbsp;place&nbsp;so&nbsp;that&nbsp;amplitude&nbsp;increases&nbsp;and&nbsp;decreases&nbsp;according&nbsp;to&nbsp;shape&nbsp;and&nbsp;intensity</span></dd></dl>
+ <dl><dt><a name="-triangle"><strong>triangle</strong></a>(phase, special=None)</dt><dd><span class="code">Calculate&nbsp;amplitude&nbsp;for&nbsp;a&nbsp;triangle&nbsp;wave&nbsp;at&nbsp;the&nbsp;given&nbsp;phase</span></dd></dl>
+ <dl><dt><a name="-vmove"><strong>vmove</strong></a>(buf, amount)</dt><dd><span class="code">Shift&nbsp;samples&nbsp;in&nbsp;the&nbsp;Y&nbsp;axis</span></dd></dl>
+</td></tr></table><p>
+<table class="section">
+<tr class="decor data-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Data</strong></td></tr>
+    
+<tr><td class="decor data-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
+<td class="singlecolumn"><strong>CHANNELS</strong> = 2<br>
+<strong>FREQUENCY</strong> = 44100<br>
+<strong>MAX_LEN</strong> = 3600000<br>
+<strong>SAMPLE_RATE</strong> = 88200<br>
+<strong>frequency9</strong> = {'A': 14080, 'A#': 14917.24, 'B': 15804.264, 'C': 8372.018, 'C#': 8869.844, 'D': 9397.272, 'D#': 9956.064, 'E': 10548.084, 'F': 11175.304, 'F#': 11839.82, ...}</td></tr></table>
+</body></html>
