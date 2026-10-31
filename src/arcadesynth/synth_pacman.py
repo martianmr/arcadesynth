@@ -1,4 +1,7 @@
-"""sounds from the 1980 Namco game Pac-Man"""
+"""sounds from the 1980 Namco game Pac-Man
+
+[source](../src/arcadesynth/synth_pacman.py)
+"""
 from .synth import *
 
 

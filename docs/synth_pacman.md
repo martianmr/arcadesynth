@@ -4,6 +4,8 @@
 
 sounds from the 1980 Namco game Pac-Man
 
+[source](../src/arcadesynth/synth_pacman.py)
+
 <a id="arcadesynth.synth_pacman.pm_credit"></a>
 
 #### pm\_credit
