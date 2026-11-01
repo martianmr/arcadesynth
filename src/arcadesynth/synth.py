@@ -217,6 +217,7 @@ def samplept(func, i, f, harmonics=0, p=[], special=None):
 
     Returns:
         amplitude of sample at current index and phase
+        updated phase list (if optional p parameter was provided)
     """
     amp = 0.0
     scaling = math.pow(2, harmonics) / (math.pow(2, harmonics + 1) - 1)

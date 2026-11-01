@@ -192,6 +192,7 @@ the list (p), otherwise phase can be calculated on the fly.
 **Returns**:
 
   amplitude of sample at current index and phase
+  updated phase list (if optional p parameter was provided)
 
 <a id="arcadesynth.synth.ms_to_samples"></a>
 
