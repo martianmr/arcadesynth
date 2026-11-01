@@ -20,12 +20,31 @@ SAMPLE_RATE = FREQUENCY * CHANNELS
 
 
 def _limit(d, limit = 1.0, llimit = None):
-    """Force value to a limit"""
+    """Force value to a limit
+
+    Args:
+        d: data point to limit
+        limit: upper limit
+        llimit: lower limit (optional)
+
+    Returns:
+        limited value
+    """
     return min(max(d, (-limit if llimit is None else llimit)), limit)
 
 
 def _butterworth_filter(buf, cutoff, type='lowpass', order=2):
-    """A butterworth filter to reduce unwanted frequencies, order 1 is lowest effect, 6 is more dramatic"""
+    """A butterworth filter to reduce unwanted frequencies
+
+    Args:
+        buf: sample buffer
+        cutoff: cutoff frequency in Hz
+        type: one of 'lowpass', 'highpass', 'bandpass', 'bandstop'
+        order: determines how much effect the filter has, order 1 is lowest effect, 6 is more dramatic
+
+    Returns:
+        updated buffer with filter applied    
+    """
     nyq = 0.5 * SAMPLE_RATE
     normal_cutoff = cutoff / nyq
     b, a = butter(order, normal_cutoff, btype=type)
@@ -39,19 +58,38 @@ def _butterworth_filter(buf, cutoff, type='lowpass', order=2):
 
 
 def sawtooth(phase, _=None):
-    """Calculate amplitude for a sawtooth wave at the given phase"""
+    """Calculate amplitude for a sawtooth wave at the given phase
+
+    Args:
+        phase: calculated phase based on frequency and time
+
+    Returns:
+        amplitude of sample
+    """
     return (2.0 / math.pi) * ((phase / 2.0) % math.pi) - 1.0
 
 
 def triangle(phase, _=None):
-    """Calculate amplitude for a triangle wave at the given phase"""
+    """Calculate amplitude for a triangle wave at the given phase
+    
+    Args:
+        phase: calculated phase based on frequency and time
+
+    Returns:
+        amplitude of sample
+    """
     return ((2.0 / math.pi) * (math.pi - abs(phase % (2.0 * math.pi) - math.pi)) - 1.0)
 
 
 def square(phase, pwm=None):
     """Calculate amplitude for a square wave at the given phase
     
-    'pwm' can be specified as a cutoff for generating PWM
+    Args:
+        phase: calculated phase based on frequency and time
+        pwm: cutoff value between -1.0 and 1.0 to create pulse wave modulation on the intersection (optional) 
+
+    Returns:
+        amplitude of sample
     """
     cutoff = 0.0 if pwm is None else pwm
     return 1.0 if math.sin(phase) > cutoff else -1.0
@@ -59,17 +97,30 @@ def square(phase, pwm=None):
 
 def sin(phase, precision=None):
     """Calculate amplitude for a sine wave at the given phase
-    
-    'precision' can be set to an integer value to simulate lower precision math
+
+    Args:
+        phase: calculated phase based on frequency and time
+        precision: set to an integer value to simulate lower precision math (optional)
+
+    Returns:
+        amplitude of sample
     """
     return math.sin(phase) if precision is None else round((math.sin(phase) / precision), 1) * precision
 
 
 def synth_organ(p, _=None):
     """Calculate amplitude for a synth organ sound at the given phase
-    
+
     Combination of octave harmonics of sine waves and a triangle wave at first octave to give a synth organ sound
     As used in pac-man intermission music and pac-man die sounds
+
+    'pwm' can be specified as a cutoff for generating PWM
+
+    Args:
+        phase: calculated phase based on frequency and time
+
+    Returns:
+        amplitude of sample
     """
     return (sin(p * 8) / 12) + (sin(p * 4) / 6) + (triangle(p * 2) / 3) + (sin(p) / 3)
 
@@ -82,7 +133,16 @@ def synth_organ(p, _=None):
 def init(frequency=FREQUENCY, channels=CHANNELS):
     """Set up sample rate, do this first to avoid using defaults
 
+    The init function calculates the number of samples needed to construct consistent sounds for internal use
     E.g. get these values from pygame with 'frequency, _, channels = pygame.mixer.get_init()'
+
+    Args:
+        frequency: frequency of each channel
+        channels: number of channels
+
+    Returns:
+        None
+
     """
     global SAMPLE_RATE, CHANNELS, FREQUENCY
     CHANNELS = channels
@@ -92,7 +152,11 @@ def init(frequency=FREQUENCY, channels=CHANNELS):
 
 
 def get_init():
-    """Return the configured calculated sample rate"""
+    """Return the configured calculated sample rate
+    
+    Returns:
+        calculated sample rate
+    """
     return SAMPLE_RATE
 
 
@@ -120,7 +184,14 @@ frequency9 = {
 
 
 def notehz(note):
-    """For a given note e.g. "A4", return the frequency in Hz"""
+    """For a given note return the frequency
+
+    Args:
+        note: note name as a string, e.g. "A4" or "C#3", flats are not supported
+
+    Returns:
+        frequency in Hz
+    """
     hz = frequency9[note[:-1]]
     octave = int(note[-1])
     for _ in range(9, octave, -1):
@@ -137,6 +208,17 @@ def samplept(func, i, f, harmonics=0, p=[], special=None):
     If frequency is not constant throughout the buffer, track the current phase during the
     building process and pass the current phase of the primary and any harmonics through 
     the list (p), otherwise phase can be calculated on the fly.
+
+    Args:
+        func: the function to use to calculate the amplitude for the sample
+        i: numeric index to position of sample in buffer
+        f: target frequency
+        harmonics: number of natural harmonics to add (optional)
+        p: list containing current phase of primary and any harmonics (optional)
+        special: special parameters for modifying some functions (optional)
+
+    Returns:
+        amplitude of sample at current index and phase
     """
     amp = 0.0
     scaling = math.pow(2, harmonics) / (math.pow(2, harmonics + 1) - 1)
@@ -154,12 +236,25 @@ def samplept(func, i, f, harmonics=0, p=[], special=None):
 
 
 def ms_to_samples(ms):
-    """Convert time in milliseconds to number of samples"""
+    """Convert time in milliseconds to number of samples
+
+    Args:
+        ms: time in milliseconds
+
+    Returns:
+        number of samples in buffer
+    """
     return int(SAMPLE_RATE * ms / 1000.0)
 
 
 def samples_to_ms(n):
     """Convert number of samples to time in milliseconds
+
+    Args:
+        n: number of samples in buffer
+
+    Returns:
+        time in milliseconds
     """
     return (n / SAMPLE_RATE) * 1000.0
 
@@ -174,6 +269,12 @@ def tobytes(buf):
 
     Use this to convert a sound held in internal format to a byte list for external processing, e.g. by
     pygame.
+
+    Args:
+        buf: sample buffer
+
+    Returns:
+        byte list
     """
     a = array.array("h")
     for i in range(len(buf)):
@@ -182,7 +283,15 @@ def tobytes(buf):
 
 
 def boost(buf, gain):
-    """Apply gain to buffer"""
+    """Apply gain to buffer
+
+    Args:
+        buf: sample buffer
+        gain: amount to multiply amplitude by
+
+    Returns:
+        new sample buffer
+    """
     nparray = np.array(buf)
     npnew = nparray * gain
     buf = new_buffer(npnew)
@@ -190,7 +299,14 @@ def boost(buf, gain):
 
 
 def reverse(buf):
-    """Return backwards copy of the buffer"""
+    """Return backwards copy of the buffer
+
+    Args:
+        buf: sample buffer
+
+    Returns:
+        new sample buffer
+    """
     nparray = np.array(buf)
     npnew = np.flip(nparray)
     buf = new_buffer(npnew)
@@ -198,7 +314,15 @@ def reverse(buf):
 
 
 def combine(buf1, buf2):
-    """Combine 2 buffers giving average amplitude for each sample"""
+    """Combine 2 buffers giving average amplitude for each sample
+
+    Args:
+        buf1: first sample buffer
+        buf2: second sample buffer
+
+    Returns:
+        new sample buffer
+    """
     if (len(buf1) != len(buf2)):
         pad(buf1 if len(buf1) < len(buf2) else buf2, max(len(buf1), len(buf2)))
     nparray1 = np.array(buf1)
@@ -209,7 +333,16 @@ def combine(buf1, buf2):
 
 
 def add(target, source, offset=0):
-    """Add the source sample to the target buffer"""
+    """Add the source sample to the target buffer
+
+    Args:
+        target: a sample buffer to be updated with the new sound
+        source: a sample buffer containing the sound to add
+        offset: number of milliseconds from the start of the target where we insert the source (optional)
+
+    Returns:
+        new sample buffer
+    """
     olen = ms_to_samples(offset)
     slen = len(source)
     tlen = slen + olen
@@ -225,7 +358,16 @@ def add(target, source, offset=0):
 
 
 def constrain(buf, lower, upper):
-    """Clip a buffer to an upper and lower constraint"""
+    """Clip a buffer to an upper and lower constraint
+
+    Args:
+        buf: sample buffer
+        lower: lower constraint from -1.0 to 1.0
+        upper: upper constraint from -1.0 to 1.0
+
+    Returns:
+        new sample buffer
+    """
     nparray = np.array(buf)
     np.clip(nparray, lower, upper, nparray)
     buf = new_buffer(nparray)
@@ -233,7 +375,15 @@ def constrain(buf, lower, upper):
 
 
 def vmove(buf, amount):
-    """Shift samples in the Y axis"""
+    """Shift samples in the Y axis
+
+    Args:
+        buf: sample buffer
+        amount: magnitude of move from -1.0 to 1.0
+
+    Returns:
+        new sample buffer
+    """
     nparray = np.array(buf)
     nparray += amount
     buf = new_buffer(nparray)
@@ -241,7 +391,16 @@ def vmove(buf, amount):
 
 
 def fade(buf, a1, a2):
-    """Change start and end amplitude and scale smoothly between"""
+    """Change start and end amplitude and scale smoothly between
+
+    Args:
+        buf: sample buffer
+        a1: start amplitude from -1.0 to 1.0
+        a2: end amplitude from -1.0 to 1.0
+
+    Returns:
+        new sample buffer
+    """
     buf = boost(buf, a1)
     ms = samples_to_ms(len(buf))
     envelope(buf, 0, ms, a2 / a1, 0)
@@ -249,24 +408,58 @@ def fade(buf, a1, a2):
 
 
 def slice(buf, start, end):
-    """Extract a section of a buffer with start and end times in ms"""
+    """Extract a section of a buffer with start and end times in ms
+
+    Args:
+        buf: sample buffer
+        start: start position in milliseconds
+        end: end position in milliseconds
+
+    Returns:
+        new sample buffer containing just the sliced samples
+    """
     s = ms_to_samples(start)
     e = min(len(buf), ms_to_samples(end))
     return buf[s:e]
 
 
 def median_filter(buf):
-    """Perform a median filter"""
+    """Perform a median filter
+
+    Args:
+        buf: sample buffer
+
+    Returns:
+        new filtered sample buffer
+    """
     return new_buffer(medfilt(buf, kernel_size=5))
 
 
 def lowpass_filter(buf, cutoff, order=6):
-    """Apply a filter that progressively removes frequencies above the cutoff"""
+    """Apply a filter that progressively removes frequencies above the cutoff
+
+    Args:
+        buf: sample buffer
+        cutoff: cutoff frequency in Hz
+        order: determines how much effect the filter has, order 1 is lowest effect, 6 is more dramatic (optional)
+
+    Returns:
+        new filtered sample buffer
+    """
     return _butterworth_filter(buf, cutoff, type='lowpass', order=order)
 
 
 def highpass_filter(buf, cutoff, order=6):
-    """Apply a filter that progressively removes frequencies below the cutoff"""
+    """Apply a filter that progressively removes frequencies below the cutoff
+
+    Args:
+        buf: sample buffer
+        cutoff: cutoff frequency in Hz
+        order: determines how much effect the filter has, order 1 is lowest effect, 6 is more dramatic (optional)
+
+    Returns:
+        new filtered sample buffer
+    """
     return _butterworth_filter(buf, cutoff, type='highpass', order=order)
 
 
@@ -276,18 +469,29 @@ def highpass_filter(buf, cutoff, order=6):
 
 
 def new_buffer(content=[]):
-    """Create a new buffer of floating point amplitudes"""
+    """Create a new buffer of floating point amplitudes
+
+    Args:
+        content: optional list of values to populate the buffer with
+
+    Returns:
+        new sample buffer
+    """
     return array.array("d", content)
 
 
-def sequence(beatlen, notes, finetune = 1.0):
+def sequence(beatlen, notes, finetune=1.0):
     """Sequence notes to a buffer for creating music
-    
-    'beatlen' is the length of each beat in the sequence in milliseconds.
-    'notes' is a list of notes, each element of the list is in the following format:
-    [note_name, start_beat, length_in_beats, velocity, creation_function]
-    The creation function must have the parameter format (ms, volume, frequency)
-    finetune can be used to make the notes consistently slightly sharp/flat.
+
+    Args:
+        beatlen: length of each beat in the sequence in milliseconds
+        notes: list of notes, each element of the list is in the following format:  
+                [note_name, start_beat, length_in_beats, velocity, creation_function]  
+                The creation function must have the parameter format (ms, volume, frequency)
+        finetune: multiply the frequency by this amount to make the notes consistently slightly sharp/flat (optional)
+
+    Returns:
+        new sample buffer containing completed sequence
     """
     buf = new_buffer()
     for note in notes:
@@ -300,8 +504,17 @@ def sequence(beatlen, notes, finetune = 1.0):
     return buf
 
 
-def make_sawtooth(ms, vol=0.2, freq=140.0):
-    """Make a sawtooth wave"""
+def make_sawtooth(ms, vol, freq):
+    """Make a sawtooth wave
+
+    Args:
+        ms: time in milliseconds
+        vol: volume from 0.0 to 1.0
+        freq: frequency in Hz
+
+    Returns:
+        new sample buffer
+    """
     n = ms_to_samples(ms)
     buf = new_buffer()
     for i in range(n):
@@ -309,8 +522,17 @@ def make_sawtooth(ms, vol=0.2, freq=140.0):
     return buf
 
 
-def make_triangle(ms, vol=0.2, freq=140.0):
-    """Make a triangle wave"""
+def make_triangle(ms, vol, freq):
+    """Make a triangle wave
+
+    Args:
+        ms: time in milliseconds
+        vol: volume from 0.0 to 1.0
+        freq: frequency in Hz
+
+    Returns:
+        new sample buffer
+    """
     n = ms_to_samples(ms)
     buf = new_buffer()
     for i in range(n):
@@ -318,8 +540,18 @@ def make_triangle(ms, vol=0.2, freq=140.0):
     return buf
 
 
-def make_square(ms, vol=0.2, freq=140.0, pwm=None):
-    """Make a square wave"""
+def make_square(ms, vol, freq, pwm=None):
+    """Make a square wave
+
+    Args:
+        ms: time in milliseconds
+        vol: volume from 0.0 to 1.0
+        freq: frequency in Hz
+        pwm: cutoff value between -1.0 and 1.0 to create pulse wave modulation on the intersection (optional)
+
+    Returns:
+        new sample buffer
+    """
     n = ms_to_samples(ms)
     buf = new_buffer()
     for i in range(n):
@@ -327,8 +559,19 @@ def make_square(ms, vol=0.2, freq=140.0, pwm=None):
     return buf
 
 
-def make_sin(ms=600, vol=0.4, freq=50.0, harmonics=0, precision=None):
-    """Make a sine wave"""
+def make_sin(ms, vol, freq, harmonics=0, precision=None):
+    """Make a sine wave
+
+    Args:
+        ms: time in milliseconds
+        vol: volume from 0.0 to 1.0
+        freq: frequency in Hz
+        harmonics: number of natural harmonics to add (optional)
+        precision: set to an integer value to simulate lower precision math (optional)
+
+    Returns:
+        new sample buffer
+    """
     n = ms_to_samples(ms)
     buf = new_buffer()
     for i in range(n):
@@ -340,6 +583,14 @@ def make_synth_organ(ms, vol, freq):
     """Combination of octave harmonics of sine waves and a triangle wave at first octave to give a synth organ sound
     
     As used in pac-man intermission music and pac-man die sounds
+
+    Args:
+        ms: time in milliseconds
+        vol: volume from 0.0 to 1.0
+        freq: frequency in Hz
+
+    Returns:
+        new sample buffer
     """
     n = ms_to_samples(ms)
     buf = new_buffer()
@@ -348,11 +599,17 @@ def make_synth_organ(ms, vol, freq):
     return buf
 
 
-def make_white(ms=600, vol=0.4, smooth=False):
+def make_white(ms, vol, smooth=False):
     """Fill a buffer with random amplitudes to produce white noise
 
-    If smooth is False use values of 1.0 or -1.0 randomly to produce white noise similar to the SN76477 Complex Sound Generator chip,
-    otherwise generate purely random amplitudes which gives a more natural noise.
+    Args:
+        ms: time in milliseconds
+        vol: volume from 0.0 to 1.0
+        smooth: if smooth is False use values of 1.0 or -1.0 randomly to produce white noise similar to the SN76477 Complex Sound Generator chip,  
+                otherwise generate purely random amplitudes which gives a more natural noise. (optional)
+
+    Returns:
+        new sample buffer
     """
     n = ms_to_samples(ms)
     buf = new_buffer()
@@ -364,18 +621,39 @@ def make_white(ms=600, vol=0.4, smooth=False):
     return buf
 
 
-def make_brown(ms=600, vol=0.1, freq=150.0, order=1):
-    """Apply a lowpass filter to white noise to produce brown noise"""
+def make_brown(ms, vol, freq, order=1):
+    """Apply a lowpass filter to white noise to produce brown noise
+
+    Args:
+        ms: time in milliseconds
+        vol: volume from 0.0 to 1.0
+        freq: filter cutoff frequency in Hz
+        order: magnitude of filter effect, order 1 is lowest effect, 6 is more dramatic (optional)
+
+    Returns:
+        new sample buffer
+    """
     buf = make_white(ms, vol)
     buf = lowpass_filter(buf, freq, order)
     return buf
 
 
-def make_sweep(ms=80, startf=1500.0, endf=400.0, shape=triangle, vol=1.0, repeat=0, harmonics=0, special=None):
+def make_sweep(ms, startf, endf, shape, vol, repeat=0, harmonics=0, special=None):
     """Create a buffer that starts at frequency startf and ends at endf
 
-    If repeat is not zero the cycle goes from startf to endf and back to startf in repeat milliseconds and
-    continues to cycle until ms milliseconds have been filled.
+    Args:
+        ms: time in milliseconds
+        startf: start frequency in Hz
+        endf: end frequency in Hz
+        shape: the function to use to calculate the amplitude for each sample, e.g. sin() or square()
+        vol: volume from 0.0 to 1.0
+        repeat: If repeat is not zero the cycle goes from startf to endf and back to startf in repeat milliseconds and
+                    continues to cycle until ms milliseconds have been filled (optional)
+        harmonics: number of natural harmonics to add (optional)
+        special: special parameters for modifying some functions (optional)
+
+    Returns:
+        new sample buffer
     """
     n = ms_to_samples(ms)
     loop = n * 2 if repeat == 0 else ms_to_samples(repeat)
@@ -394,8 +672,15 @@ def make_sweep(ms=80, startf=1500.0, endf=400.0, shape=triangle, vol=1.0, repeat
     return buf
 
 
-def make_silence(ms=500):
-    """Create a buffer filled with silence"""
+def make_silence(ms):
+    """Create a buffer filled with silence
+
+    Args:
+        ms: time in milliseconds
+
+    Returns:
+        new sample buffer
+    """
     return new_buffer([0.0] * ms_to_samples(ms))
 
 
@@ -405,22 +690,50 @@ def make_silence(ms=500):
 
 
 def pad(buf, length):
-    """Pad out a buffer with zeroes to length"""
+    """Pad out a buffer with zeroes to length
+
+    Args:
+        buf: sample buffer
+        length: target length of buffer in number of samples
+
+    Returns:
+        new sample buffer
+    """
     if len(buf) < length:
         buf += new_buffer([0.0] * (length - len(buf)))
     return
 
 
-def tremolo(buf, freq, intensity, shape=sin, special=None):
-    """Modify a buffer in place so that amplitude increases and decreases according to shape and intensity"""
+def tremolo(buf, freq, intensity, shape, special=None):
+    """Modify a buffer in place so that amplitude increases and decreases according to shape and intensity
+
+    Args:
+        buf: sample buffer
+        freq: frequency in Hz of tremolo effect
+        intensity: amount to change amplitude from 0.0 to 1.0
+        shape: the function to use to calculate the amplitude for each sample e.g. sin() or square()
+        special: special parameters for modifying some functions (optional)
+
+    Returns:
+        None
+    """
     for i in range(len(buf)):
         phase = i * math.pi * freq / SAMPLE_RATE
         buf[i] *= (1.0 - intensity) + abs(((shape(phase, special) + 1.0) / 2.0) * intensity)
     return
 
 
-def noisalise(buf, vol = 1.0, gain = 1.0):
-    """Apply gain to buffer proportional to mean amplitude, useful for restoring a constant RMS after processing noise"""
+def noisalise(buf, vol=1.0, gain=1.0):
+    """Apply gain to buffer proportional to mean amplitude, useful for restoring a constant RMS after processing noise
+
+    Args:
+        buf: sample buffer
+        vol: target volume from 0.0 to 1.0 (optional)
+        gain: amount to change amplitude from 0.0 to 1.0 (optional)
+
+    Returns:
+        None
+    """
     data = np.array(buf)
     av = (data[data > 0].mean() + -data[data < 0].mean()) / 2.0
     r = gain / (av / 2.0)
@@ -430,7 +743,20 @@ def noisalise(buf, vol = 1.0, gain = 1.0):
 
 
 def envelope(buf, attack, decay, sustain, release, start=0, end=MAX_LEN):
-    """Modify a buffer in place with an ADSR envelope"""
+    """Modify a buffer in place with an ADSR envelope
+
+    Args:
+        buf: sample buffer
+        attack: attack time in milliseconds
+        decay: decay time in milliseconds
+        sustain: volume of sustain from 0.0 to 1.0
+        release: release time in milliseconds
+        start: start milliseconds in sample to apply effect (optional)
+        end: end milliseconds in sample to apply effect (optional)
+
+    Returns:
+        None
+    """
     attack_start = ms_to_samples(start)
     attack_end = min(len(buf), ms_to_samples(start + attack))
     decay_end = min(len(buf), ms_to_samples(decay) + attack_end)
@@ -449,7 +775,16 @@ def envelope(buf, attack, decay, sustain, release, start=0, end=MAX_LEN):
 
 
 def echo(buf, ms, vol):
-    """Modify buffer in place to add a short delay to the sound"""
+    """Modify buffer in place to add a short delay to the sound
+
+    Args:
+        buf: sample buffer
+        ms: delay in milliseconds
+        vol: volume of effect from 0.0 to 1.0
+
+    Returns:
+        None
+    """
     delay = ms_to_samples(ms)
     for _ in range(delay):
         buf.append(0.0)
