@@ -97,8 +97,6 @@ Calculate amplitude for a synth organ sound at the given phase
 Combination of octave harmonics of sine waves and a triangle wave at first octave to give a synth organ sound
 As used in pac-man intermission music and pac-man die sounds
 
-'pwm' can be specified as a cutoff for generating PWM
-
 **Arguments**:
 
 - `phase` - calculated phase based on frequency and time

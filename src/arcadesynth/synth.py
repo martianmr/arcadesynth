@@ -114,8 +114,6 @@ def synth_organ(p, _=None):
     Combination of octave harmonics of sine waves and a triangle wave at first octave to give a synth organ sound
     As used in pac-man intermission music and pac-man die sounds
 
-    'pwm' can be specified as a cutoff for generating PWM
-
     Args:
         phase: calculated phase based on frequency and time
 
