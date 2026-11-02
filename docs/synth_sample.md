@@ -11,7 +11,7 @@ some simple basic sounds
 #### sawtooth\_wave
 
 ```python
-def sawtooth_wave(ms=1600, vol=1.0, freq=150.0)
+def sawtooth_wave(ms=500, vol=1.0, freq=150.0)
 ```
 
 Return bytes representing a simple sawtooth wave
@@ -21,7 +21,7 @@ Return bytes representing a simple sawtooth wave
 #### triangle\_wave
 
 ```python
-def triangle_wave(ms=1600, vol=1.0, freq=150.0)
+def triangle_wave(ms=500, vol=1.0, freq=150.0)
 ```
 
 Return bytes representing a simple triangle wave
@@ -31,7 +31,7 @@ Return bytes representing a simple triangle wave
 #### sine\_wave
 
 ```python
-def sine_wave(ms=600, vol=1.0, freq=150.0)
+def sine_wave(ms=500, vol=1.0, freq=150.0)
 ```
 
 Return bytes representing a simple sine wave
@@ -41,7 +41,7 @@ Return bytes representing a simple sine wave
 #### square\_wave
 
 ```python
-def square_wave(ms=90, vol=0.4, freq=144.0)
+def square_wave(ms=500, vol=1.0, freq=150.0)
 ```
 
 Return bytes representing a simple square wave
@@ -51,7 +51,7 @@ Return bytes representing a simple square wave
 #### brown\_noise
 
 ```python
-def brown_noise(ms=600, vol=0.4, freq=150.0)
+def brown_noise(ms=500, vol=1.0, freq=150.0)
 ```
 
 Return bytes representing brown noise
@@ -61,7 +61,7 @@ Return bytes representing brown noise
 #### white\_noise
 
 ```python
-def white_noise(ms=600, vol=0.4, smooth=False)
+def white_noise(ms=500, vol=1.0, smooth=False)
 ```
 
 Return bytes representing white noise
@@ -71,7 +71,7 @@ Return bytes representing white noise
 #### sweep
 
 ```python
-def sweep(ms=80, startf=1500.0, endf=100.0, shape=sin, vol=1.0, repeat=0)
+def sweep(ms=500, startf=1500.0, endf=100.0, shape=sin, vol=1.0, repeat=0)
 ```
 
 Return bytes representing a frequency sweep from startf to endf
@@ -81,8 +81,28 @@ Return bytes representing a frequency sweep from startf to endf
 #### chord
 
 ```python
-def chord(ms=600, vol=0.4, f1=261.6256, f2=329.6276)
+def chord(ms=500, vol=1.0, f1=notehz("C3"), f2=notehz("E3"))
 ```
 
 Return bytes representing a 2 note chord
+
+<a id="arcadesynth.synth_sample.fadeup"></a>
+
+#### fadeup
+
+```python
+def fadeup(ms=500, a1=0.2, a2=1.0)
+```
+
+Return bytes representing a note that fades up in amplitude
+
+<a id="arcadesynth.synth_sample.silence"></a>
+
+#### silence
+
+```python
+def silence(ms=500)
+```
+
+Return bytes containing silence
 
