@@ -22,6 +22,7 @@ def loadsound(functions, name):
         end = time.time()
         print("Loaded", f.__name__, "in", round(end - start, 6), "seconds")
     sound = pygame.mixer.Sound(buf)
+    sound.set_volume(0.5)
     allend = time.time()
     print("Loaded", name, "in", round(allend - allstart, 6), "seconds, length", round(sound.get_length(), 2))
     return sound
