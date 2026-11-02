@@ -13,10 +13,18 @@ FREQUENCY = 44100
 CHANNELS = 2
 MAX_LEN = 3600000
 SAMPLE_RATE = FREQUENCY * CHANNELS
+CACHE = {}
 
 # ---------------------------------------------------------------------------
 # Internal functions
 # ---------------------------------------------------------------------------
+
+
+def _check_cache(func, length, volume, frequency):
+    hash_value = hash((func, length, volume, frequency))
+    if hash_value not in CACHE:
+        CACHE[hash_value] = func(length, volume, frequency)
+    return CACHE[hash_value]
 
 
 def _limit(d, limit = 1.0, llimit = None):
@@ -499,7 +507,8 @@ def sequence(beatlen, notes, finetune=1.0):
         length = note[2] * beatlen
         velocity = note[3]
         func = note[4]
-        buf = add(buf, func(length, velocity, hz), beat)
+        source = _check_cache(func, length, velocity, hz)
+        buf = add(buf, source, beat)
     return buf
 
 
