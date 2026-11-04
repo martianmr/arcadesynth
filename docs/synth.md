@@ -89,13 +89,51 @@ Calculate amplitude for a sine wave at the given phase
 #### synth\_organ
 
 ```python
-def synth_organ(p, _=None)
+def synth_organ(phase, _=None)
 ```
 
 Calculate amplitude for a synth organ sound at the given phase
 
 Combination of octave harmonics of sine waves and a triangle wave at first octave to give a synth organ sound
 As used in pac-man intermission music and pac-man die sounds
+
+**Arguments**:
+
+- `phase` - calculated phase based on frequency and time
+  
+
+**Returns**:
+
+  amplitude of sample
+
+<a id="arcadesynth.synth.synth_string"></a>
+
+#### synth\_string
+
+```python
+def synth_string(phase, _=None)
+```
+
+Calculate amplitude for a string instrument at the given phase
+
+**Arguments**:
+
+- `phase` - calculated phase based on frequency and time
+  
+
+**Returns**:
+
+  amplitude of sample
+
+<a id="arcadesynth.synth.synth_resonance"></a>
+
+#### synth\_resonance
+
+```python
+def synth_resonance(phase, _=None)
+```
+
+Calculate amplitude for resonating harmonics at the given phase
 
 **Arguments**:
 
@@ -162,30 +200,46 @@ For a given note return the frequency
 
   frequency in Hz
 
+<a id="arcadesynth.synth.bpm_to_beatlen"></a>
+
+#### bpm\_to\_beatlen
+
+```python
+def bpm_to_beatlen(bpm)
+```
+
+Convert BPM to a beat length in milliseconds
+
+**Arguments**:
+
+- `bpm` - beats per minute
+  
+
+**Returns**:
+
+  beat length in ms
+
 <a id="arcadesynth.synth.samplept"></a>
 
 #### samplept
 
 ```python
-def samplept(func, i, f, harmonics=0, p=[], special=None)
+def samplept(func, i, f, p=None, special=None)
 ```
 
 Calculate amplitude of a sample for a buffer position
 
 Given a function to calculate amplitude of a wave (func) for a buffer position (i)
 and frequency (f) calculate and return the amplitude.
-If harmonics is not zero also add in the amplitude of the given order of harmonics.
-If frequency is not constant throughout the buffer, track the current phase during the
-building process and pass the current phase of the primary and any harmonics through
-the list (p), otherwise phase can be calculated on the fly.
+If frequency is not constant throughout the buffer, track the current phase (p) during the
+building process otherwise phase can be calculated on the fly.
 
 **Arguments**:
 
 - `func` - the function to use to calculate the amplitude for the sample
 - `i` - numeric index to position of sample in buffer
 - `f` - target frequency
-- `harmonics` - number of natural harmonics to add (optional)
-- `p` - list containing current phase of primary and any harmonics (optional)
+- `p` - positive real number indicating current phase (optional)
 - `special` - special parameters for modifying some functions (optional)
   
 
@@ -589,7 +643,7 @@ Make a square wave
 #### make\_sin
 
 ```python
-def make_sin(ms, vol, freq, harmonics=0, precision=None)
+def make_sin(ms, vol, freq, precision=None)
 ```
 
 Make a sine wave
@@ -599,7 +653,6 @@ Make a sine wave
 - `ms` - time in milliseconds
 - `vol` - volume from 0.0 to 1.0
 - `freq` - frequency in Hz
-- `harmonics` - number of natural harmonics to add (optional)
 - `precision` - set to an integer value to simulate lower precision math (optional)
   
 
@@ -618,6 +671,27 @@ def make_synth_organ(ms, vol, freq)
 Combination of octave harmonics of sine waves and a triangle wave at first octave to give a synth organ sound
 
 As used in pac-man intermission music and pac-man die sounds
+
+**Arguments**:
+
+- `ms` - time in milliseconds
+- `vol` - volume from 0.0 to 1.0
+- `freq` - frequency in Hz
+  
+
+**Returns**:
+
+  new sample buffer
+
+<a id="arcadesynth.synth.make_piano"></a>
+
+#### make\_piano
+
+```python
+def make_piano(ms, vol, freq)
+```
+
+A synthesised piano with natural harmonics
 
 **Arguments**:
 
@@ -679,14 +753,7 @@ Apply a lowpass filter to white noise to produce brown noise
 #### make\_sweep
 
 ```python
-def make_sweep(ms,
-               startf,
-               endf,
-               shape,
-               vol,
-               repeat=0,
-               harmonics=0,
-               special=None)
+def make_sweep(ms, startf, endf, shape, vol, repeat=0, special=None)
 ```
 
 Create a buffer that starts at frequency startf and ends at endf
@@ -700,7 +767,6 @@ Create a buffer that starts at frequency startf and ends at endf
 - `vol` - volume from 0.0 to 1.0
 - `repeat` - If repeat is not zero the cycle goes from startf to endf and back to startf in repeat milliseconds and
   continues to cycle until ms milliseconds have been filled (optional)
-- `harmonics` - number of natural harmonics to add (optional)
 - `special` - special parameters for modifying some functions (optional)
   
 

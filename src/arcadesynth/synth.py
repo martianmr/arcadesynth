@@ -116,7 +116,7 @@ def sin(phase, precision=None):
     return math.sin(phase) if precision is None else round((math.sin(phase) / precision), 1) * precision
 
 
-def synth_organ(p, _=None):
+def synth_organ(phase, _=None):
     """Calculate amplitude for a synth organ sound at the given phase
 
     Combination of octave harmonics of sine waves and a triangle wave at first octave to give a synth organ sound
@@ -128,15 +128,42 @@ def synth_organ(p, _=None):
     Returns:
         amplitude of sample
     """
-    return (sin(p * 8) / 12) + (sin(p * 4) / 6) + (triangle(p * 2) / 3) + (sin(p) / 3)
+    return (sin(phase * 8) / 12) + (sin(phase * 4) / 6) + (triangle(phase * 2) / 3) + (sin(phase) / 3)
 
 
-def synth_piano(p, _=None):
+def synth_string(phase, _=None):
+    """Calculate amplitude for a string instrument at the given phase
+
+    Args:
+        phase: calculated phase based on frequency and time
+
+    Returns:
+        amplitude of sample
+    """
     max_a = 0
     a = 0
-    for i in range(1, 8):
+    for i in range(1, 7):
         max_a += 1 / i
-        a += sin(p * i) / i
+        a += sin(phase * i) / (i * 2 - 1)
+    a /= max_a
+    return a
+
+
+def synth_resonance(phase, _=None):
+    """Calculate amplitude for resonating harmonics at the given phase
+
+    Args:
+        phase: calculated phase based on frequency and time
+
+    Returns:
+        amplitude of sample
+    """
+    max_a = 0
+    a = 0
+    for i in range(2, 4):
+        max_a += 1 / i
+        a += sin(phase * i) / (i * 4)
+        a += sin(phase / i) / (i * 4)
     a /= max_a
     return a
 
@@ -636,14 +663,18 @@ def make_piano(ms, vol, freq):
     Returns:
         new sample buffer
     """
-    # buf1 = make_sin(ms + 100, vol, freq, 0)
-    # buf2 = make_triangle(ms + 100, vol, freq/2)
-    # buf = combine(buf1, buf2)
-    n = ms_to_samples(ms)
+    length = ms + 300
+    n = ms_to_samples(length)
     buf = new_buffer()
     for i in range(n):
-        buf.append(samplept(synth_piano, i, freq) * vol)
-    envelope(buf, 20, 40, 0.2, ms - 300)
+        buf.append(samplept(synth_string, i, freq) * vol)
+    envelope(buf, 0, 800, 0.2, length - 800)
+    res = new_buffer()
+    for i in range(n):
+        res.append(samplept(synth_resonance, i, freq) * vol * 0.25)
+    envelope(res, 10, 0, 1.0, length)
+    buf = combine(buf, res)
+    echo(buf, 20, 0.5)
     return buf
 
 
@@ -808,7 +839,7 @@ def envelope(buf, attack, decay, sustain, release, start=0, end=MAX_LEN):
     attack_end = min(len(buf), ms_to_samples(start + attack))
     decay_end = min(len(buf), ms_to_samples(decay) + attack_end)
     release_end = min(len(buf), ms_to_samples(end))
-    sustain_end = min(len(buf), release_end - ms_to_samples(release))
+    sustain_end = max(decay_end, min(len(buf), release_end - ms_to_samples(release)))
     if attack != 0.0:
         for i in range(attack_start, attack_end):
             buf[i] *= (i - attack_start) / (attack_end - attack_start)
