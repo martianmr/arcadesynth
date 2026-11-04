@@ -5,6 +5,7 @@ import wave
 from arcadesynth import synth_asteroids as ast
 from arcadesynth import synth_spaceinvaders as si
 from arcadesynth import synth_pacman as pm
+from arcadesynth import synth_example as eg
 
 FREQUENCY = 44100
 CHANNELS = 1
@@ -28,7 +29,7 @@ class Game:
         self.screen = pygame.display.set_mode((400, 400))
         self.clock = pygame.time.Clock()
         init_audio()
-        self.sound = pygame.mixer.Sound(si.si_extralife())
+        self.sound = pygame.mixer.Sound(eg.eg_fur_elise())
         sfile = wave.open('output.wav', 'w')
         sfile.setframerate(FREQUENCY)
         sfile.setnchannels(CHANNELS)
@@ -65,7 +66,7 @@ class Game:
 
 
 def main():
-    pygame.mixer.pre_init(frequency=FREQUENCY, channels = CHANNELS)
+    pygame.mixer.pre_init(frequency=FREQUENCY, channels=CHANNELS)
     pygame.init()
     Game().run()
 
