@@ -44,9 +44,9 @@ sound = pygame.mixer.Sound(synth.tobytes(buf))
 sound.play()
 ```
 
-## Space Invaders
+## Built-in Sounds
 
-There are some built-in hand-crafted synthesized sounds including those from the 1978 classic Space Invaders by Taito. Sounds in the arcade machine are produced on a Texas Instruments SN76477 'complex sound generator' chip supported by custom electronics.
+Other modules contain built-in hand-crafted synthesized example sounds and recreations of sounds from classic arcade games.
 
 E.g. synthesize the sound made by the flying saucer blowing up in Space Invaders.
 
@@ -60,6 +60,6 @@ sound = pygame.mixer.Sound(si.si_ufodie())
 sound.play()
 ```
 
-## LICENSE
+## License
 
 arcadesynth is is released under the [MIT license](https://opensource.org/license/mit).
