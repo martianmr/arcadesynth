@@ -696,7 +696,7 @@ def make_white(ms, vol, smooth=False):
     rng = random.Random()
     for _ in range(n):
         r = rng.uniform(-1.0, 1.0) * vol
-        buf.append(r if smooth else 1.0 if r > 0.0 else -1.0)
+        buf.append(r if smooth else vol if r > 0.0 else -vol)
     return buf
 
 
