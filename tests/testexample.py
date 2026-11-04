@@ -13,13 +13,16 @@ def testexample():
     gunshot = loadsound([example.eg_gunshot], "gunshot")
     boom = loadsound([example.eg_boom], "boom")
     zap = loadsound([example.eg_zap], "zap")
+    fur_elise = loadsound([example.eg_fur_elise], "für elise")
 
     gunshot.play()
     time.sleep(gunshot.get_length() * 1.5)
     boom.play()
     time.sleep(boom.get_length() * 1.5)
     zap.play()
-    time.sleep(zap.get_length())
+    time.sleep(zap.get_length() * 1.5)
+    fur_elise.play()
+    time.sleep(fur_elise.get_length())
 
 
 def main():
