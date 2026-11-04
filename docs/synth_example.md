@@ -36,3 +36,13 @@ def eg_zap()
 
 The sound of a Kill-o-Zap gun, probably
 
+<a id="arcadesynth.synth_example.eg_fur_elise"></a>
+
+#### eg\_fur\_elise
+
+```python
+def eg_fur_elise()
+```
+
+Für Elise on synth piano
+
