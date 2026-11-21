@@ -684,7 +684,7 @@ def make_white(ms, vol, smooth=False):
     Args:
         ms: time in milliseconds
         vol: volume from 0.0 to 1.0
-        smooth: if smooth is False use values of 1.0 or -1.0 randomly to produce white noise similar to the SN76477 Complex Sound Generator chip,  
+        smooth: if smooth is False use values of 1.0 or -1.0 randomly to produce white noise similar to that produced by early arcade machines,
                 otherwise generate purely random amplitudes which gives a more natural noise. (optional)
 
     Returns:

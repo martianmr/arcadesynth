@@ -4,7 +4,9 @@
 
 sounds from the 1978 Taito game Space Invaders
 
-The original arcade machine uses a Texas Instruments SN76477 'complex sound generator' chip
+The original arcade machine uses lots of custom electronics and a Texas Instruments SN76477 'complex sound generator' chip.
+
+Check out https://www.computerarcheology.com/Arcade/SpaceInvaders/#the-space-invaders-system for more information.
 
 [source](../src/arcadesynth/synth_spaceinvaders.py)
 
